@@ -8,7 +8,7 @@ import UserMenu from "./user-menu";
 import { checkUser } from "@/lib/checkUser";
 import UserLoading from "./user-loading";
 
-const header = async () => {
+async function Header() {
   await checkUser();
   return (
     <header className="container mx-auto">
@@ -44,6 +44,6 @@ const header = async () => {
       <UserLoading />
     </header>
   );
-};
+}
 
-export default header;
+export default Header;
