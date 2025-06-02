@@ -10,30 +10,30 @@ const isProtectedRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
-  // Get auth state ASYNCHRONOUSLY
-  const { userId, orgId } = await auth();
+  const { userId, orgId, redirectToSignIn } = await auth();
 
-  // Route protection logic
+  // Redirect unauthenticated users from protected routes
   if (!userId && isProtectedRoute(req)) {
-    return auth().redirectToSignIn(); // This remains sync but is handled by Clerk
+    return redirectToSignIn();
   }
 
-  // Org onboarding redirect
-  if (
-    userId &&
-    !orgId &&
-    req.nextUrl.pathname !== "/onboarding" &&
-    req.nextUrl.pathname !== "/"
-  ) {
+  // Redirect users without an org to onboarding (unless already there)
+  const isOnboardingOrRoot =
+    req.nextUrl.pathname === "/onboarding" || req.nextUrl.pathname === "/";
+
+  if (userId && !orgId && !isOnboardingOrRoot) {
     return NextResponse.redirect(new URL("/onboarding", req.url));
   }
 
+  // Continue normally
   return NextResponse.next();
 });
 
 export const config = {
   matcher: [
+    // Skip Next.js internals and static files
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    // Always match API and tRPC routes
     "/(api|trpc)(.*)",
   ],
 };

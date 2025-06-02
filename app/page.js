@@ -20,34 +20,34 @@ import Image from "next/image";
 
 const faqs = [
   {
-    question: "What is DashFlow?",
+    question: "What is ZCRUM?",
     answer:
-      "DashFlow is a powerful project management tool designed to help teams organize, track, and manage their work efficiently. It combines intuitive design with robust features to streamline your workflow and boost productivity.",
+      "ZCRUM is a powerful project management tool designed to help teams organize, track, and manage their work efficiently. It combines intuitive design with robust features to streamline your workflow and boost productivity.",
   },
   {
-    question: "How does DashFlow compare to other project management tools?",
+    question: "How does ZCRUM compare to other project management tools?",
     answer:
-      "DashFlow offers a unique combination of intuitive design, powerful features, and flexibility. Unlike other tools, we focus on providing a seamless experience for both agile and traditional project management methodologies, making it versatile for various team structures and project types.",
+      "ZCRUM offers a unique combination of intuitive design, powerful features, and flexibility. Unlike other tools, we focus on providing a seamless experience for both agile and traditional project management methodologies, making it versatile for various team structures and project types.",
   },
   {
-    question: "Is DashFlow suitable for small teams?",
+    question: "Is ZCRUM suitable for small teams?",
     answer:
-      "Absolutely! DashFlow is designed to be scalable and flexible. It works great for small teams and can easily grow with your organization as it expands. Our user-friendly interface ensures that teams of any size can quickly adapt and start benefiting from DashFlow's features.",
+      "Absolutely! ZCRUM is designed to be scalable and flexible. It works great for small teams and can easily grow with your organization as it expands. Our user-friendly interface ensures that teams of any size can quickly adapt and start benefiting from ZCRUM's features.",
   },
   {
-    question: "What key features does DashFlow offer?",
+    question: "What key features does ZCRUM offer?",
     answer:
-      "DashFlow provides a range of powerful features including intuitive Kanban boards for visualizing workflow, robust sprint planning tools for agile teams, comprehensive reporting for data-driven decisions, customizable workflows, time tracking, and team collaboration tools. These features work seamlessly together to enhance your project management experience.",
+      "ZCRUM provides a range of powerful features including intuitive Kanban boards for visualizing workflow, robust sprint planning tools for agile teams, comprehensive reporting for data-driven decisions, customizable workflows, time tracking, and team collaboration tools. These features work seamlessly together to enhance your project management experience.",
   },
   {
-    question: "Can DashFlow handle multiple projects simultaneously?",
+    question: "Can ZCRUM handle multiple projects simultaneously?",
     answer:
-      "Yes, DashFlow is built to manage multiple projects concurrently. You can easily switch between projects, and get a bird's-eye view of all your ongoing work. This makes DashFlow ideal for organizations juggling multiple projects or clients.",
+      "Yes, ZCRUM is built to manage multiple projects concurrently. You can easily switch between projects, and get a bird's-eye view of all your ongoing work. This makes ZCRUM ideal for organizations juggling multiple projects or clients.",
   },
   {
     question: "Is there a learning curve for new users?",
     answer:
-      "While DashFlow is packed with features, we've designed it with user-friendliness in mind. New users can quickly get up to speed thanks to our intuitive interface, helpful onboarding process, and comprehensive documentation.",
+      "While ZCRUM is packed with features, we've designed it with user-friendliness in mind. New users can quickly get up to speed thanks to our intuitive interface, helpful onboarding process, and comprehensive documentation.",
   },
 ];
 
@@ -77,22 +77,21 @@ export default function Home() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="container mx-auto py-20 text-center">
-        <h1 className="text-6xl sm:text-7xl lg:text-8xl font-extrabold gradient-title flex flex-col">
-          Your Workflow. Supercharged.
-          <br />
+        <h1 className="text-6xl sm:text-7xl lg:text-8xl font-extrabold gradient-title pb-6 flex flex-col">
+          Streamline Your Workflow <br />
           <span className="flex mx-auto gap-3 sm:gap-4 items-center">
             with
             <Image
-              src={"/DashFlow_logo.png"}
-              alt="DashFlow Logo"
-              width={800}
-              height={100}
-              className="h-40 sm:h-56 w-auto object-contain"
+              src={"/logo2.png"}
+              alt="Zscrum Logo"
+              width={400}
+              height={80}
+              className="h-14 sm:h-24 w-auto object-contain"
             />
           </span>
         </h1>
         <p className="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
-          Unify planning, tracking, and execution — with no bottlenecks.
+          Empower your team with our intuitive project management solution.
         </p>
         <p className="text-xl mb-12 max-w-2xl mx-auto"></p>
         <Link href="/onboarding">
@@ -108,15 +107,14 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="bg-[#0B0B0F] py-20 px-5">
+      <section id="features" className="bg-gray-900 py-20 px-5">
         <div className="container mx-auto">
           <h3 className="text-3xl font-bold mb-12 text-center">Key Features</h3>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} className="bg-[#1A1A1E]">
+              <Card key={index} className="bg-gray-800">
                 <CardContent className="pt-6">
-                  <feature.icon className="h-12 w-12 mb-4 text-[#9A9A9A]" />
-
+                  <feature.icon className="h-12 w-12 mb-4 text-blue-300" />
                   <h4 className="text-xl font-semibold mb-2">
                     {feature.title}
                   </h4>
@@ -139,7 +137,7 @@ export default function Home() {
       </section>
 
       {/* FAQ Section */}
-      <section className="pt-7 pb-7 bg-[#0B0B0F] text-[#E5E5E5]">
+      <section className="bg-gray-900 py-20 px-5">
         <div className="container mx-auto">
           <h3 className="text-3xl font-bold mb-12 text-center">
             Frequently Asked Questions
@@ -161,8 +159,12 @@ export default function Home() {
           <h3 className="text-3xl font-bold mb-6">
             Ready to Transform Your Workflow?
           </h3>
+          <p className="text-xl mb-12">
+            Join thousands of teams already using ZCRUM to streamline their
+            projects and boost productivity.
+          </p>
           <Link href="/onboarding">
-            <Button className="bg-[#2E2E2E] text-white hover:bg-[#3A3A3A]">
+            <Button size="lg" className="animate-bounce">
               Start For Free <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>

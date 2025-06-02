@@ -7,12 +7,16 @@ import UserIssues from "./_components/user-issues";
 
 export default async function OrganizationPage({ params }) {
   const { orgId } = params;
-  const { userId } = auth();
 
+  // Await Clerk's auth to get userId (must be awaited!)
+  const { userId } = await auth();
+
+  // Redirect if user is not authenticated
   if (!userId) {
-    redirect("/sign-in");
+    return redirect("/sign-in");
   }
 
+  // Fetch organization details using orgId
   const organization = await getOrganization(orgId);
 
   if (!organization) {
@@ -25,7 +29,6 @@ export default async function OrganizationPage({ params }) {
         <h1 className="text-5xl font-bold gradient-title pb-2">
           {organization.name}&rsquo;s Projects
         </h1>
-
         <OrgSwitcher />
       </div>
       <div className="mb-4">

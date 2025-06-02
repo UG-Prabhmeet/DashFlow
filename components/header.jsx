@@ -1,34 +1,35 @@
-import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
-import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
-import { PenBox } from "lucide-react";
+import Link from "next/link";
+import { SignedIn, SignedOut, SignInButton } from "@clerk/nextjs";
 import UserMenu from "./user-menu";
+import { PenBox } from "lucide-react";
+import Image from "next/image";
 import { checkUser } from "@/lib/checkUser";
 import UserLoading from "./user-loading";
 
 async function Header() {
   await checkUser();
+
   return (
     <header className="container mx-auto">
       <nav className="py-6 px-4 flex justify-between items-center">
         <Link href="/">
           <h1 className="text-2xl font-bold">
             <Image
-              src={"/DashFlow_logo.png"}
-              alt="DashFlow Logo"
+              src={"/logo2.png"}
+              alt="Zscrum Logo"
               width={200}
               height={56}
-              className="h-20 w-auto object-contain"
+              className="h-10 w-auto object-contain"
             />
           </h1>
         </Link>
         <div className="flex items-center gap-4">
           <Link href="/project/create">
-            <Button variant="default" className="flex items-center gap-2">
+            <Button variant="destructive" className="flex items-center gap-2">
               <PenBox size={18} />
-              <span className="hidden md:inline">Start Project</span>
+              <span className="hidden md:inline">Create Project</span>
             </Button>
           </Link>
           <SignedOut>
@@ -41,6 +42,7 @@ async function Header() {
           </SignedIn>
         </div>
       </nav>
+
       <UserLoading />
     </header>
   );

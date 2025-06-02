@@ -10,7 +10,7 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "CuminSeed",
+  title: "Jira Clone",
   description: "",
 };
 
@@ -33,30 +33,15 @@ export default function RootLayout({ children }) {
         },
       }}
     >
-      <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
+      <html lang="en" className="dark" style={{ colorScheme:"dark"}}>
         <body className={`${inter.className} animated-dotted-background`}>
           <ThemeProvider attribute="class" defaultTheme="dark">
             <Header />
             <main className="min-h-screen">{children}</main>
             <Toaster richColors />
-            {/* footer */}
-            <footer className="bg-black text-white py-10 text-center relative">
-              <div className="container mx-auto px-4">
-                <h1 className="text-6xl font-extrabold tracking-wide">
-                  DashFlow
-                </h1>
-                <p className="text-lg mt-2">©2025 All rights reserved.</p>
-                <p className="text-lg">Site by Prabhmeet Singh.</p>
-
-                {/* for email support */}
-
-                {/* <div className="mt-6 text-center">
-								<p className="text-xl font-medium">Need help managing your finances?</p>
-								<a href="mailto:support@financetracker.com" className="text-4xl font-bold underline">
-									support@financetracker.com
-								</a>
-								</div> */}
-                <div className="absolute top-4 right-4 text-2xl">©</div>
+            <footer className="bg-gray-900 py-12">
+              <div className="container mx-auto px-4 text-center text-gray-200">
+                <p>Made with 💗 by RoadsideCoder</p>
               </div>
             </footer>
           </ThemeProvider>

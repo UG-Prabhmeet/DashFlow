@@ -4,11 +4,13 @@ import { db } from "@/lib/prisma";
 import { auth, clerkClient } from "@clerk/nextjs/server";
 
 export async function getOrganization(slug) {
-  const { userId } = auth();
+  // Await the auth() to get the current user's userId
+  const { userId } = await auth(); // **await** auth() to get userId
   if (!userId) {
     throw new Error("Unauthorized");
   }
 
+  // Retrieve the user from the database
   const user = await db.user.findUnique({
     where: { clerkUserId: userId },
   });
@@ -17,8 +19,9 @@ export async function getOrganization(slug) {
     throw new Error("User not found");
   }
 
-  // Get the organization details
-  const organization = await clerkClient().organizations.getOrganization({
+  // Get the organization details using clerkClient
+  const client = await clerkClient(); // **await** clerkClient() to get the client instance
+  const organization = await client.organizations.getOrganization({
     slug,
   });
 
@@ -26,11 +29,10 @@ export async function getOrganization(slug) {
     return null;
   }
 
-  // Check if user belongs to this organization
-  const { data: membership } =
-    await clerkClient().organizations.getOrganizationMembershipList({
-      organizationId: organization.id,
-    });
+  // Check if the user belongs to this organization
+  const { data: membership } = await client.organizations.getOrganizationMembershipList({
+    organizationId: organization.id,
+  });
 
   const userMembership = membership.find(
     (member) => member.publicUserData.userId === userId
@@ -45,11 +47,13 @@ export async function getOrganization(slug) {
 }
 
 export async function getProjects(orgId) {
-  const { userId } = auth();
+  // Await the auth() to get the current user's userId
+  const { userId } = await auth(); // **await** auth() to get userId
   if (!userId) {
     throw new Error("Unauthorized");
   }
 
+  // Retrieve the user from the database
   const user = await db.user.findUnique({
     where: { clerkUserId: userId },
   });
@@ -58,6 +62,7 @@ export async function getProjects(orgId) {
     throw new Error("User not found");
   }
 
+  // Get projects related to the organization
   const projects = await db.project.findMany({
     where: { organizationId: orgId },
     orderBy: { createdAt: "desc" },
@@ -67,12 +72,14 @@ export async function getProjects(orgId) {
 }
 
 export async function getUserIssues(userId) {
-  const { orgId } = auth();
+  // Await the auth() to get the current user's orgId
+  const { orgId } = await auth(); // **await** auth() to get orgId
 
   if (!userId || !orgId) {
     throw new Error("No user id or organization id found");
   }
 
+  // Retrieve the user from the database
   const user = await db.user.findUnique({
     where: { clerkUserId: userId },
   });
@@ -81,6 +88,7 @@ export async function getUserIssues(userId) {
     throw new Error("User not found");
   }
 
+  // Get issues related to the user and organization
   const issues = await db.issue.findMany({
     where: {
       OR: [{ assigneeId: user.id }, { reporterId: user.id }],
@@ -100,11 +108,13 @@ export async function getUserIssues(userId) {
 }
 
 export async function getOrganizationUsers(orgId) {
-  const { userId } = auth();
+  // Await the auth() to get the current user's userId
+  const { userId } = await auth(); // **await** auth() to get userId
   if (!userId) {
     throw new Error("Unauthorized");
   }
 
+  // Retrieve the user from the database
   const user = await db.user.findUnique({
     where: { clerkUserId: userId },
   });
@@ -113,15 +123,18 @@ export async function getOrganizationUsers(orgId) {
     throw new Error("User not found");
   }
 
-  const organizationMemberships =
-    await clerkClient().organizations.getOrganizationMembershipList({
-      organizationId: orgId,
-    });
+  // Get organization memberships using clerkClient
+  const client = await clerkClient(); // **await** clerkClient() to get the client instance
+  const organizationMemberships = await client.organizations.getOrganizationMembershipList({
+    organizationId: orgId,
+  });
 
+  // Get the userIds of the members of the organization
   const userIds = organizationMemberships.data.map(
     (membership) => membership.publicUserData.userId
   );
 
+  // Retrieve the users from the database
   const users = await db.user.findMany({
     where: {
       clerkUserId: {
