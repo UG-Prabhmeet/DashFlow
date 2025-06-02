@@ -17,7 +17,7 @@ export default async function ProjectPage({ params }) {
         projectTitle={project.name}
         projectId={projectId}
         projectKey={project.key}
-        sprintKey={project.sprints?.length + 1}
+        sprintKey={(project.sprints?.length || 0) + 1}
       />
 
       {project.sprints.length > 0 ? (

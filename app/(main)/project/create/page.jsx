@@ -52,7 +52,7 @@ export default function CreateProjectPage() {
 
   useEffect(() => {
     if (project) router.push(`/project/${project.id}`);
-  }, [loading]);
+  }, [project]);
 
   if (!isOrgLoaded || !isUserLoaded) {
     return null;
@@ -82,6 +82,7 @@ export default function CreateProjectPage() {
         <div>
           <Input
             id="name"
+            type="text" // ✅ explicitly set type
             {...register("name")}
             className="bg-slate-950"
             placeholder="Project Name"
@@ -93,6 +94,7 @@ export default function CreateProjectPage() {
         <div>
           <Input
             id="key"
+            type="text" // ✅ explicitly set type
             {...register("key")}
             className="bg-slate-950"
             placeholder="Project Key (Ex: RCYT)"

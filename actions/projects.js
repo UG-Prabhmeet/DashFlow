@@ -1,10 +1,12 @@
 "use server";
 
 import { db } from "@/lib/prisma";
-import { auth, clerkClient } from "@clerk/nextjs/server";
+import { auth} from "@clerk/nextjs/server";
+import { clerkClient } from "@clerk/clerk-sdk-node";
+
 
 export async function createProject(data) {
-  const { userId, orgId } = auth();
+  const { userId, orgId } = await auth();
 
   if (!userId) {
     throw new Error("Unauthorized");
@@ -16,7 +18,7 @@ export async function createProject(data) {
 
   // Check if the user is an admin of the organization
   const { data: membershipList } =
-    await clerkClient().organizations.getOrganizationMembershipList({
+    await clerkClient.organizations.getOrganizationMembershipList({
       organizationId: orgId,
     });
 
@@ -45,7 +47,7 @@ export async function createProject(data) {
 }
 
 export async function getProject(projectId) {
-  const { userId, orgId } = auth();
+  const { userId, orgId } = await auth();
 
   if (!userId || !orgId) {
     throw new Error("Unauthorized");
@@ -83,7 +85,7 @@ export async function getProject(projectId) {
 }
 
 export async function deleteProject(projectId) {
-  const { userId, orgId, orgRole } = auth();
+  const { userId, orgId, orgRole } = await auth();
 
   if (!userId || !orgId) {
     throw new Error("Unauthorized");

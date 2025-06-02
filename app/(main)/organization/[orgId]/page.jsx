@@ -6,7 +6,7 @@ import ProjectList from "./_components/project-list";
 import UserIssues from "./_components/user-issues";
 
 export default async function OrganizationPage({ params }) {
-  const { orgId } = params;
+  const { orgId } = await params;
 
   // Await Clerk's auth to get userId (must be awaited!)
   const { userId } = await auth();
