@@ -4,7 +4,7 @@ import SprintCreationForm from "../_components/create-sprint";
 import SprintBoard from "../_components/sprint-board";
 
 export default async function ProjectPage({ params }) {
-  const { projectId } = params;
+  const { projectId } = await params;
   const project = await getProject(projectId);
 
   if (!project) {
