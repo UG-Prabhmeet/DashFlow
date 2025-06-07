@@ -146,6 +146,35 @@ body {
   }
 }
 
+@layer utilities {
+  .rainbow-gradient-bg {
+    @apply w-full h-full fixed top-0 left-0 -z-10;
+    background: linear-gradient(
+      270deg,
+      #ff5f6d,
+      #ffc371,
+      #47e7b3,
+      #6a85f1,
+      #a178df,
+      #ff5f6d
+    );
+    background-size: 1200% 1200%;
+    animation: rainbowShift 20s ease infinite;
+  }
+
+  @keyframes rainbowShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+}
+
 .animated-dotted-background {
   background-color: #19191d;
   background-image: radial-gradient(#4a5568 1.25px, transparent 1.25px);
@@ -160,4 +189,15 @@ body {
   100% {
     background-position: 30px 30px;
   }
+}
+
+.custom-gradient {
+  background: radial-gradient(
+    ellipse at center left,
+    #000000 0%,
+    #2d2d2d 30%,
+    #f7d98d 60%,
+    #d6f5ff 80%,
+    #0099ff 100%
+  );
 }
