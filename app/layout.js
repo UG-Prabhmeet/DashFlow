@@ -11,39 +11,43 @@ import Footer from "@/components/footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "DashFlow - Project Management App",
-  description: "DashFlow is a project management app to help teams organize, track, and collaborate on projects efficiently.",
+    title: "DashFlow - Project Management App",
+    description:
+        "DashFlow is a project management app to help teams organize, track, and collaborate on projects efficiently.",
 };
 
 export default function RootLayout({ children }) {
-  return (
-    <ClerkProvider
-      appearance={{
-        baseTheme: shadesOfPurple,
-        variables: {
-          colorPrimary: "#3b82f6",
-          colorBackground: "#1a202c",
-          colorInputBackground: "#2D3748",
-          colorInputText: "#F3F4F6",
-        },
-        elements: {
-          formButtonPrimary: "bg-purple-600 hover:bg-purple-700 text-white",
-          card: "bg-gray-800",
-          headerTitle: "text-blue-400",
-          headerSubtitle: "text-gray-400",
-        },
-      }}
-    >
-      <html lang="en" className="dark" style={{ colorScheme:"dark"}}>
-        <body className={`${inter.className} animated-dotted-background`}>
-          <ThemeProvider attribute="class" defaultTheme="dark">
-            <Header />
-            <main className="min-h-screen">{children}</main>
-            <Toaster richColors />
-            <Footer />
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
-  );
+    return (
+        <ClerkProvider
+            appearance={{
+                baseTheme: shadesOfPurple,
+                variables: {
+                    colorPrimary: "#3b82f6",
+                    colorBackground: "#1a202c",
+                    colorInputBackground: "#2D3748",
+                    colorInputText: "#F3F4F6",
+                },
+                elements: {
+                    formButtonPrimary:
+                        "bg-purple-600 hover:bg-purple-700 text-white",
+                    card: "bg-gray-800",
+                    headerTitle: "text-blue-400",
+                    headerSubtitle: "text-gray-400",
+                },
+            }}
+        >
+            <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
+                <body
+                    className={`${inter.className} animated-dotted-background`}
+                >
+                    <ThemeProvider attribute="class" defaultTheme="dark">
+                        {/* <Header /> */}
+                        <main className="min-h-screen">{children}</main>
+                        <Toaster richColors />
+                        <Footer />
+                    </ThemeProvider>
+                </body>
+            </html>
+        </ClerkProvider>
+    );
 }
