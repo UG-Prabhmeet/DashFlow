@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
                     className={`${inter.className} animated-dotted-background`}
                 >
                     <ThemeProvider attribute="class" defaultTheme="dark">
-                        {/* <Header /> */}
+                        <Header />
                         <main className="min-h-screen">{children}</main>
                         <Toaster richColors />
                         <Footer />
