@@ -1,0 +1,38 @@
+import { getProject } from "@/actions/projects";
+import { notFound } from "next/navigation";
+import SprintCreationForm from "../../_components/create-sprint";
+import SprintStats from "../../_components/sprint-stats";
+import SprintBoard from "../../_components/sprint-board";
+
+export default async function ProjectPage({ params }) {
+    const { projectId } = await params;
+    const project = await getProject(projectId);
+
+    if (!project) {
+        notFound();
+    }
+
+    return (
+        <div className="container mx-auto">
+            <SprintCreationForm
+                projectTitle={project.name}
+                projectId={projectId}
+                projectKey={project.key}
+                sprintKey={(project.sprints?.length || 0) + 1}
+            />
+
+            {project.sprints.length > 0 ? (
+                <>
+                    <SprintStats issues={project.sprints[0].issues} />
+                    <SprintBoard
+                        sprints={project.sprints}
+                        projectId={projectId}
+                        orgId={project.organizationId}
+                    />
+                </>
+            ) : (
+                <div>Create a Sprint from button above</div>
+            )}
+        </div>
+    );
+}

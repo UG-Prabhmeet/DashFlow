@@ -15,6 +15,7 @@ import { BarLoader } from "react-spinners";
 import { ExternalLink } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { getOrganizationUsers } from "@/actions/organizations";
 import {
     Select,
     SelectContent,
@@ -38,8 +39,10 @@ export default function IssueDetailsDialog({
 }) {
     const [status, setStatus] = useState(issue.status);
     const [priority, setPriority] = useState(issue.priority);
+    const [assigneeId, setAssigneeId] = useState(issue.assignee?.id || "");
     const { user } = useUser();
-    const { membership } = useOrganization();
+    const { membership, organization } = useOrganization();
+    const [orgUsers, setOrgUsers] = useState([]);
     const router = useRouter();
     const pathname = usePathname();
 
@@ -57,6 +60,17 @@ export default function IssueDetailsDialog({
         data: updated,
     } = useFetch(updateIssue);
 
+    const canChange =
+        user.id === issue.reporter.clerkUserId ||
+        membership.role === "org:admin";
+
+    useEffect(() => {
+        if (organization?.id && canChange) {
+            // ✅ Corrected: added fetching of org users based on organization.id
+            getOrganizationUsers(organization.id).then(setOrgUsers);
+        }
+    }, [organization?.id, canChange]);
+
     const handleDelete = async () => {
         if (window.confirm("Are you sure you want to delete this issue?")) {
             deleteIssueFn(issue.id);
@@ -72,6 +86,15 @@ export default function IssueDetailsDialog({
         setPriority(newPriority);
         updateIssueFn(issue.id, { status, priority: newPriority });
     };
+    const handleAssigneeChange = (newAssigneeId) => {
+        // ✅ Added function to handle assignee change
+        setAssigneeId(newAssigneeId);
+        updateIssueFn(issue.id, {
+            status,
+            priority,
+            assigneeId: newAssigneeId,
+        });
+    };
 
     useEffect(() => {
         if (deleted) {
@@ -83,22 +106,29 @@ export default function IssueDetailsDialog({
         }
     }, [deleted, updated]);
 
-    const canChange =
-        user.id === issue.reporter.clerkUserId ||
-        membership.role === "org:admin";
-
     const handleGoToProject = () => {
         router.push(`/project/${issue.projectId}?sprint=${issue.sprintId}`);
+    };
+
+    const getDisplayName = (user, adminIds = []) => {
+        const first = user?.name || user?.firstName || "";
+        const last = user?.lastName || "";
+        const name =
+            `${first} ${last}`.trim() ||
+            user?.email?.split("@")[0] ||
+            "Unknown";
+        const isAdmin = adminIds.includes(user?.id);
+        return `${name}${isAdmin ? " (admin)" : ""}`;
     };
 
     const isProjectPage = !pathname.startsWith("/project/");
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent>
+            <DialogContent className="bg-[#111827] text-white rounded-2xl shadow-2xl border border-gray-700 max-w-2xl px-6 py-4 space-y-4">
                 <DialogHeader>
-                    <div className="flex justify-between items-center">
-                        <DialogTitle className="text-3xl">
+                    <div className="flex justify-between items-start mt-4">
+                        <DialogTitle className="text-2xl font-semibold">
                             {issue.title}
                         </DialogTitle>
                         {isProjectPage && (
@@ -108,7 +138,7 @@ export default function IssueDetailsDialog({
                                 onClick={handleGoToProject}
                                 title="Go to Project"
                             >
-                                <ExternalLink className="h-4 w-4" />
+                                <ExternalLink className="h-5 w-5" />
                             </Button>
                         )}
                     </div>
@@ -162,21 +192,92 @@ export default function IssueDetailsDialog({
                     <div>
                         <h4 className="font-semibold">Description</h4>
                         <MDEditor.Markdown
-                            className="rounded px-2 py-1"
-                            source={issue.description || "--"}
+                            className="rounded px-2 py-1 mt-3"
+                            source={
+                                issue.description ||
+                                "_No description provided._"
+                            }
                         />
                     </div>
 
-                    <div className="flex justify-between">
-                        <div className="flex flex-col gap-2">
-                            <h4 className="font-semibold">Assignee</h4>
-                            <UserAvatar user={issue.assignee} />
+                    <div className="grid grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <h4 className="font-semibold mb-1">Assignee</h4>
+                            {canChange ? (
+                                <Select
+                                    value={assigneeId}
+                                    onValueChange={handleAssigneeChange}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue
+                                            placeholder="Select assignee"
+                                            // 👇 Custom render
+                                            children={getDisplayName(
+                                                orgUsers.find(
+                                                    (u) => u.id === assigneeId
+                                                ),
+                                                issue.project?.adminIds || []
+                                            )}
+                                        />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {orgUsers.map((orgUser) => (
+                                            <SelectItem
+                                                key={orgUser.id}
+                                                value={orgUser.id}
+                                            >
+                                                {getDisplayName(
+                                                    orgUser,
+                                                    issue.project?.adminIds ||
+                                                        []
+                                                )}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            ) : (
+                                <UserAvatar user={issue.assignee} />
+                            )}
                         </div>
-                        <div className="flex flex-col gap-2">
-                            <h4 className="font-semibold">Reporter</h4>
-                            <UserAvatar user={issue.reporter} />
+                        <div>
+                            <h4 className="text-sm text-gray-400 mb-1">
+                                Reporter
+                            </h4>
+                            <div className="flex items-center space-x-2">
+                                <UserAvatar user={issue.reporter} />
+                                <span className="text-sm">
+                                    {getDisplayName(
+                                        issue.reporter,
+                                        issue.project?.adminIds || []
+                                    )}
+                                </span>
+                            </div>
                         </div>
                     </div>
+                    {issue.dueDate && (
+                        <div>
+                            <h4 className="font-semibold mb-1">Due Date</h4>
+                            <p className="text-gray-300">
+                                {new Date(issue.dueDate).toLocaleDateString()}
+                            </p>
+                        </div>
+                    )}
+
+                    {issue.tags?.length > 0 && (
+                        <div>
+                            <h4 className="font-semibold mb-1">Tags</h4>
+                            <div className="flex flex-wrap gap-2">
+                                {issue.tags.map((tag, index) => (
+                                    <span
+                                        key={index}
+                                        className="bg-gray-700 text-white text-sm px-2 py-1 rounded-full"
+                                    >
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     {/* ✅ Comments Section */}
                     <IssueComments issueId={issue.id} />
@@ -193,7 +294,7 @@ export default function IssueDetailsDialog({
                     )}
 
                     {(deleteError || updateError) && (
-                        <p className="text-red-500">
+                        <p className="text-sm text-red-400 mt-2">
                             {deleteError?.message || updateError?.message}
                         </p>
                     )}

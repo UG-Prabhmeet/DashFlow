@@ -47,6 +47,8 @@ export async function createIssue(projectId, data) {
             projectId: projectId,
             sprintId: data.sprintId,
             reporterId: user.id,
+            dueDate: data.dueDate ? new Date(data.dueDate) : null,
+            tags: data.tags || [],
             assigneeId: data.assigneeId || null, // Add this line
             order: newOrder,
         },
@@ -126,6 +128,14 @@ export async function updateIssue(issueId, data) {
         throw new Error("Unauthorized");
     }
 
+    const user = await db.user.findUnique({
+        where: { clerkUserId: userId },
+    });
+
+    if (!user) {
+        throw new Error("User not found");
+    }
+
     try {
         const issue = await db.issue.findUnique({
             where: { id: issueId },
@@ -140,11 +150,19 @@ export async function updateIssue(issueId, data) {
             throw new Error("Unauthorized");
         }
 
+        if (
+            user.id !== issue.reporterId &&
+            !issue.project.adminIds.includes(user.id)
+        ) {
+            throw new Error("You don't have permission to update this issue");
+        }
+
         const updatedIssue = await db.issue.update({
             where: { id: issueId },
             data: {
                 status: data.status,
                 priority: data.priority,
+                assigneeId: data.assigneeId || null,
             },
             include: {
                 assignee: true,

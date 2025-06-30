@@ -28,6 +28,7 @@ model Project {
   organizationId String // This will store the Clerk organization ID
   sprints        Sprint[]
   issues         Issue[]
+  adminIds       String[] @default([]) // ✅ Add this line
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
@@ -54,6 +55,8 @@ model Issue {
   status      IssueStatus
   order       Int // This will store the order within its status column
   priority    IssuePriority
+  dueDate     DateTime?     // Add this for due date
+  tags        String[]      @default([]) // Simple array of strings for tags
   assignee    User?         @relation("Assignee", fields: [assigneeId], references: [id])
   assigneeId  String?
   reporter    User          @relation("Reporter", fields: [reporterId], references: [id])
