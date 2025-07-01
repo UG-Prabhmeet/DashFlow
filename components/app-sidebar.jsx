@@ -20,7 +20,6 @@ import {
 import NextImage from "next/image";
 import Link from "next/link";
 
-// Dynamic sidebar
 export function AppSidebar() {
     const { projectId } = useParams();
 
@@ -41,8 +40,8 @@ export function AppSidebar() {
             icon: FileBarChart,
         },
         {
-            title: "Calendar",
-            url: "#",
+            title: "Activity log",
+            url: `/project/${projectId}/activity`,
             icon: Calendar,
         },
         {
@@ -75,10 +74,10 @@ export function AppSidebar() {
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
-                                        <a href={item.url}>
+                                        <Link href={item.url}>
                                             <item.icon className="h-4 w-4 mr-2" />
                                             <span>{item.title}</span>
-                                        </a>
+                                        </Link>
                                     </SidebarMenuButton>
                                 </SidebarMenuItem>
                             ))}

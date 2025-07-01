@@ -82,7 +82,7 @@ export default function CreateProjectPage() {
                 <div>
                     <Input
                         id="name"
-                        type="text" // ✅ explicitly set type
+                        type="text"
                         {...register("name")}
                         className="bg-slate-950"
                         placeholder="Project Name"
@@ -96,7 +96,7 @@ export default function CreateProjectPage() {
                 <div>
                     <Input
                         id="key"
-                        type="text" // ✅ explicitly set type
+                        type="text"
                         {...register("key")}
                         className="bg-slate-950"
                         placeholder="Project Key (Ex: RCYT)"

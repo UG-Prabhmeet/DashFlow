@@ -160,7 +160,7 @@ body {
         );
         background-repeat: no-repeat;
         background-position: center;
-        background-size: 250% 250%; /* large enough to cover short texts */
+        background-size: 250% 250%;
     }
 }
 

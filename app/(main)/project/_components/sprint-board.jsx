@@ -50,7 +50,6 @@ export default function SprintBoard({ sprints, projectId, orgId }) {
         if (currentSprint.id) {
             fetchIssues(currentSprint.id);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentSprint.id]);
 
     const handleAddIssue = (status) => {

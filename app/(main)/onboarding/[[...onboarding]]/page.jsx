@@ -12,7 +12,6 @@ export default function Onboarding() {
         if (organization) {
             router.push(`/organization/${organization.slug}`);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [organization]);
 
     return (

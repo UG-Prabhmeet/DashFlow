@@ -26,10 +26,10 @@ model Project {
   name           String
   key            String
   description    String?
-  organizationId String // This will store the Clerk organization ID
+  organizationId String 
   sprints        Sprint[]
   issues         Issue[]
-  adminIds       String[]   @default([]) // ✅ Add this line
+  adminIds       String[]   @default([]) 
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
   activities     Activity[]
@@ -55,10 +55,10 @@ model Issue {
   title       String
   description String?
   status      IssueStatus
-  order       Int // This will store the order within its status column
+  order       Int 
   priority    IssuePriority
-  dueDate     DateTime? // Add this for due date
-  tags        String[]      @default([]) // Simple array of strings for tags
+  dueDate     DateTime? 
+  tags        String[]      @default([]) 
   assignee    User?         @relation("Assignee", fields: [assigneeId], references: [id])
   assigneeId  String?
   reporter    User          @relation("Reporter", fields: [reporterId], references: [id])
@@ -80,7 +80,7 @@ model Activity {
   project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   issueId     String?
   userId      String
-  user        User     @relation(fields: [userId], references: [id]) // ✅ Add this line
+  user        User     @relation(fields: [userId], references: [id]) 
   actionType  String
   description String
   createdAt   DateTime @default(now())

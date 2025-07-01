@@ -52,7 +52,6 @@ export async function getProject(projectId) {
         throw new Error("Unauthorized");
     }
 
-    // Find user to verify existence
     const user = await db.user.findUnique({
         where: { clerkUserId: userId },
     });
@@ -69,7 +68,7 @@ export async function getProject(projectId) {
                 orderBy: { createdAt: "desc" },
                 include: {
                     issues: {
-                        orderBy: { createdAt: "desc" }, // optional, for consistent display
+                        orderBy: { createdAt: "desc" },
                     },
                 },
             },

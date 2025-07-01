@@ -1,9 +1,8 @@
 import { getProject } from "@/actions/projects";
 import { getOrganizationUsers } from "@/actions/organizations";
-import { getRecentProjectActivity } from "@/actions/activity"; // You should create this function
+import { getRecentProjectActivity } from "@/actions/activity";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
@@ -58,7 +57,6 @@ export default async function ProjectOverview({ params }) {
                     </p>
                 </div>
 
-                {/* Quick Links */}
                 <div className="flex gap-2 flex-wrap">
                     <Button variant="outline" asChild>
                         <Link href={`/project/${projectId}/board`}>Board</Link>
@@ -69,8 +67,8 @@ export default async function ProjectOverview({ params }) {
                         </Link>
                     </Button>
                     <Button variant="outline" asChild>
-                        <Link href={`/project/${projectId}/calendar`}>
-                            Calendar
+                        <Link href={`/project/${projectId}/activity`}>
+                            Activity Log
                         </Link>
                     </Button>
                     <Button variant="outline" asChild>
@@ -81,7 +79,6 @@ export default async function ProjectOverview({ params }) {
                 </div>
             </div>
 
-            {/* Stats */}
             <div className="grid grid-cols-3 gap-4">
                 <div className="p-4 bg-gray-800 rounded-lg shadow">
                     <h2 className="font-semibold">Total Issues</h2>
@@ -115,7 +112,6 @@ export default async function ProjectOverview({ params }) {
                 </div>
             </div>
 
-            {/* Progress Bar */}
             <div className="p-4 bg-gray-800 rounded-lg shadow">
                 <h2 className="font-semibold mb-2">Project Progress</h2>
                 <div className="w-full bg-gray-600 h-4 rounded">
@@ -127,7 +123,6 @@ export default async function ProjectOverview({ params }) {
                 <p className="text-sm mt-1">{progressPercent}% Completed</p>
             </div>
 
-            {/* Active Sprint */}
             <div className="p-4 bg-gray-800 rounded-lg shadow">
                 <h2 className="font-semibold mb-2">Active Sprint</h2>
                 {activeSprint ? (
@@ -173,7 +168,6 @@ export default async function ProjectOverview({ params }) {
                 </div>
             </div>
 
-            {/* Recent Activity */}
             <div>
                 <h2 className="text-xl font-semibold mb-2">Recent Activity</h2>
                 <div className="space-y-2 text-sm">

@@ -66,7 +66,6 @@ export default function IssueDetailsDialog({
 
     useEffect(() => {
         if (organization?.id && canChange) {
-            // ✅ Corrected: added fetching of org users based on organization.id
             getOrganizationUsers(organization.id).then(setOrgUsers);
         }
     }, [organization?.id, canChange]);
@@ -87,7 +86,6 @@ export default function IssueDetailsDialog({
         updateIssueFn(issue.id, { status, priority: newPriority });
     };
     const handleAssigneeChange = (newAssigneeId) => {
-        // ✅ Added function to handle assignee change
         setAssigneeId(newAssigneeId);
         updateIssueFn(issue.id, {
             status,
@@ -279,10 +277,8 @@ export default function IssueDetailsDialog({
                         </div>
                     )}
 
-                    {/* ✅ Comments Section */}
                     <IssueComments issueId={issue.id} />
 
-                    {/* ✅ Delete */}
                     {canChange && (
                         <Button
                             onClick={handleDelete}

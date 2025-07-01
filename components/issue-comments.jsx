@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { highlightMentions } from "@/lib/utils/highlightMentions";
 
 export default function IssueComments({ issueId }) {
-    const { isLoaded, user } = useUser();
+    const { isLoaded } = useUser();
     const [comments, setComments] = useState([]);
     const [input, setInput] = useState("");
     const [isPending, startTransition] = useTransition();

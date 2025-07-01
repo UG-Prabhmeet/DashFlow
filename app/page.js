@@ -10,7 +10,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import CompanyCarousel from "@/components/company-carousel";
-import Image from "next/image";
 import FAQList from "@/components/Faqlist";
 import CTASection from "@/components/CTASection";
 import WhyChooseUs from "@/components/WhyChooseUs";

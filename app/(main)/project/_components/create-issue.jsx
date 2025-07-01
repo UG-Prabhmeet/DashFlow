@@ -59,8 +59,8 @@ export default function IssueCreationDrawer({
             priority: "MEDIUM",
             description: "",
             assigneeId: "",
-            dueDate: "", // ← Added default value
-            tags: "", // ← Added default value
+            dueDate: "",
+            tags: "",
         },
     });
 
@@ -85,7 +85,6 @@ export default function IssueCreationDrawer({
             onClose();
             onIssueCreated();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [newIssue, createIssueLoading]);
 
     return (
@@ -234,7 +233,6 @@ export default function IssueCreationDrawer({
                             </div>
                         </div>
 
-                        {/* --- Tags (new) --- */}
                         <Input
                             id="tags"
                             placeholder="e.g. bug,frontend,urgent"

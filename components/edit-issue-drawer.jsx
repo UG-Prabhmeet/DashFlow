@@ -78,7 +78,7 @@ export default function EditIssueDrawer({
     const onSubmit = async (data) => {
         await updateIssueFn(issue.id, {
             ...data,
-            status: issue.status, // Keep status unchanged via this form
+            status: issue.status,
         });
     };
 

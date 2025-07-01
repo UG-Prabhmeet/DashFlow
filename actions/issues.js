@@ -64,7 +64,7 @@ export async function createIssue(projectId, data) {
         `created issue '${issue.title}'`,
         "ISSUE_CREATED",
         issue.id,
-        user.id // ✅ new argument
+        user.id
     );
 
     return issue;
@@ -127,7 +127,8 @@ export async function deleteIssue(issueId) {
         issue.projectId,
         `deleted issue '${issue.title}'`,
         "ISSUE_DELETED",
-        issue.id
+        issue.id,
+        user.id
     );
 
     return { success: true };
@@ -151,7 +152,7 @@ export async function updateIssue(issueId, data) {
             where: { id: issueId },
             include: {
                 project: true,
-                assignee: true, // 👈 needed to fetch current assignee info
+                assignee: true,
             },
         });
 
@@ -173,7 +174,7 @@ export async function updateIssue(issueId, data) {
         const updates = {};
         const changeLogs = [];
 
-        // === Status Change ===
+        // Status Change
         if (data.status && data.status !== issue.status) {
             changeLogs.push({
                 desc: `changed status from '${issue.status}' to '${data.status}'`,
@@ -182,7 +183,7 @@ export async function updateIssue(issueId, data) {
             updates.status = data.status;
         }
 
-        // === Priority Change ===
+        // Priority Change
         if (data.priority && data.priority !== issue.priority) {
             changeLogs.push({
                 desc: `changed priority from '${issue.priority}' to '${data.priority}'`,
@@ -191,7 +192,7 @@ export async function updateIssue(issueId, data) {
             updates.priority = data.priority;
         }
 
-        // === Assignee Change ===
+        // Assignee Change
         if ("assigneeId" in data && data.assigneeId !== issue.assigneeId) {
             // Get previous assignee
             let previousAssignee = "Unassigned";
