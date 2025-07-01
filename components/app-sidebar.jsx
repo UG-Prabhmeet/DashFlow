@@ -46,7 +46,7 @@ export function AppSidebar() {
         },
         {
             title: "Settings",
-            url: "#",
+            url: `/project/${projectId}/settings`,
             icon: Settings,
         },
     ];
