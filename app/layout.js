@@ -10,7 +10,7 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-    title: "DashFlow - Project Management App",
+    title: "DashFlow | Agile Project Management",
     description:
         "DashFlow is a project management app to help teams organize, track, and collaborate on projects efficiently.",
 };
@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
                 },
             }}
         >
-            <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
+            <html lang="en">
                 <body
                     className={`${inter.className} animated-dotted-background`}
                 >

@@ -58,7 +58,6 @@ export default function ActivityFilters({ activity, members }) {
         <>
             <div className="space-y-4">
                 <div className="flex flex-col sm:flex-row gap-4 mt-6">
-                    {/* Search */}
                     <Input
                         className="w-full sm:w-72"
                         placeholder="Search activity..."
@@ -66,7 +65,6 @@ export default function ActivityFilters({ activity, members }) {
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
 
-                    {/* Assignees */}
                     <div className="flex gap-2 items-center">
                         {members.map((user, i) => {
                             const selected = selectedUsers.includes(user.id);
@@ -74,9 +72,9 @@ export default function ActivityFilters({ activity, members }) {
                                 <div
                                     key={user.id}
                                     onClick={() => toggleUser(user.id)}
-                                    className={`rounded-full ring ${
+                                    className={`rounded-full ring transition ${
                                         selected
-                                            ? "ring-blue-600"
+                                            ? "ring-ring"
                                             : "ring-transparent"
                                     } cursor-pointer ${i > 0 ? "-ml-6" : ""}`}
                                     style={{ zIndex: i }}
@@ -111,7 +109,7 @@ export default function ActivityFilters({ activity, members }) {
                         <PopoverContent className="w-auto p-0" align="start">
                             <input
                                 type="date"
-                                className="p-2 w-full"
+                                className="p-2 w-full bg-background text-foreground border border-border rounded"
                                 value={selectedDate}
                                 onChange={(e) =>
                                     setSelectedDate(e.target.value)
@@ -120,7 +118,6 @@ export default function ActivityFilters({ activity, members }) {
                         </PopoverContent>
                     </Popover>
 
-                    {/* Clear Filters */}
                     {isFiltersApplied && (
                         <Button
                             variant="ghost"
@@ -134,13 +131,12 @@ export default function ActivityFilters({ activity, members }) {
                 </div>
             </div>
 
-            {/* Filtered Activity Output */}
             <div className="space-y-2 text-sm mt-4">
                 {filtered.length > 0 ? (
                     filtered.map((a) => (
                         <div
                             key={a.id}
-                            className="p-3 bg-gray-800 rounded shadow"
+                            className="p-3 rounded shadow text-foreground"
                         >
                             <p>
                                 <span className="font-semibold">
@@ -148,13 +144,13 @@ export default function ActivityFilters({ activity, members }) {
                                 </span>{" "}
                                 {a.description}
                             </p>
-                            <p className="text-gray-400 text-xs">
+                            <p className="text-muted-foreground text-xs">
                                 {new Date(a.createdAt).toLocaleString()}
                             </p>
                         </div>
                     ))
                 ) : (
-                    <p className="text-gray-400">No activity found.</p>
+                    <p>No activity found.</p>
                 )}
             </div>
         </>

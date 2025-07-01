@@ -7,6 +7,7 @@ import { PenBox } from "lucide-react";
 import Image from "next/image";
 import { checkUser } from "@/lib/checkUser";
 import UserLoading from "./user-loading";
+import ThemeToggle from "./theme-toggle";
 
 async function Header() {
     await checkUser();
@@ -44,6 +45,9 @@ async function Header() {
                     <SignedIn>
                         <UserMenu />
                     </SignedIn>
+
+                    <ThemeToggle />
+
                     <Link href="/project/create">
                         <Button className="bg-[#00FFA3] text-black font-semibold px-5 py-2 rounded-full hover:bg-[#00e693]">
                             Create Project
