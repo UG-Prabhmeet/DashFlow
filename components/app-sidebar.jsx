@@ -54,13 +54,13 @@ export function AppSidebar() {
 
     return (
         <Sidebar>
-            <div className="px-1 py-0.9 flex justify-center border-b">
+            <div className="px-1 py-2 flex justify-center border-b">
                 <Link href="/">
                     <NextImage
-                        src="/logo2.png"
+                        src="/DashFlow_logo.png"
                         alt="DashFlow Logo"
                         width={140}
-                        height={40}
+                        height={50}
                         className="object-contain cursor-pointer"
                         priority
                     />

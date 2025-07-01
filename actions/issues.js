@@ -2,6 +2,7 @@
 
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
+import { logActivity } from "@/utils/activity";
 
 export async function getIssuesForSprint(sprintId) {
     const { userId, orgId } = await auth();
@@ -49,7 +50,7 @@ export async function createIssue(projectId, data) {
             reporterId: user.id,
             dueDate: data.dueDate ? new Date(data.dueDate) : null,
             tags: data.tags || [],
-            assigneeId: data.assigneeId || null, // Add this line
+            assigneeId: data.assigneeId || null,
             order: newOrder,
         },
         include: {
@@ -57,6 +58,14 @@ export async function createIssue(projectId, data) {
             reporter: true,
         },
     });
+
+    await logActivity(
+        projectId,
+        `created issue '${issue.title}'`,
+        "ISSUE_CREATED",
+        issue.id,
+        user.id // ✅ new argument
+    );
 
     return issue;
 }
@@ -68,9 +77,7 @@ export async function updateIssueOrder(updatedIssues) {
         throw new Error("Unauthorized");
     }
 
-    // Start a transaction
     await db.$transaction(async (prisma) => {
-        // Update each issue
         for (const issue of updatedIssues) {
             await prisma.issue.update({
                 where: { id: issue.id },
@@ -92,9 +99,7 @@ export async function deleteIssue(issueId) {
         throw new Error("Unauthorized");
     }
 
-    const user = await db.user.findUnique({
-        where: { clerkUserId: userId },
-    });
+    const user = await db.user.findUnique({ where: { clerkUserId: userId } });
 
     if (!user) {
         throw new Error("User not found");
@@ -118,6 +123,13 @@ export async function deleteIssue(issueId) {
 
     await db.issue.delete({ where: { id: issueId } });
 
+    await logActivity(
+        issue.projectId,
+        `deleted issue '${issue.title}'`,
+        "ISSUE_DELETED",
+        issue.id
+    );
+
     return { success: true };
 }
 
@@ -128,9 +140,7 @@ export async function updateIssue(issueId, data) {
         throw new Error("Unauthorized");
     }
 
-    const user = await db.user.findUnique({
-        where: { clerkUserId: userId },
-    });
+    const user = await db.user.findUnique({ where: { clerkUserId: userId } });
 
     if (!user) {
         throw new Error("User not found");
@@ -139,7 +149,10 @@ export async function updateIssue(issueId, data) {
     try {
         const issue = await db.issue.findUnique({
             where: { id: issueId },
-            include: { project: true },
+            include: {
+                project: true,
+                assignee: true, // 👈 needed to fetch current assignee info
+            },
         });
 
         if (!issue) {
@@ -157,18 +170,74 @@ export async function updateIssue(issueId, data) {
             throw new Error("You don't have permission to update this issue");
         }
 
+        const updates = {};
+        const changeLogs = [];
+
+        // === Status Change ===
+        if (data.status && data.status !== issue.status) {
+            changeLogs.push({
+                desc: `changed status from '${issue.status}' to '${data.status}'`,
+                type: "STATUS_UPDATED",
+            });
+            updates.status = data.status;
+        }
+
+        // === Priority Change ===
+        if (data.priority && data.priority !== issue.priority) {
+            changeLogs.push({
+                desc: `changed priority from '${issue.priority}' to '${data.priority}'`,
+                type: "PRIORITY_UPDATED",
+            });
+            updates.priority = data.priority;
+        }
+
+        // === Assignee Change ===
+        if ("assigneeId" in data && data.assigneeId !== issue.assigneeId) {
+            // Get previous assignee
+            let previousAssignee = "Unassigned";
+            if (issue.assigneeId) {
+                const prevUser = await db.user.findUnique({
+                    where: { id: issue.assigneeId },
+                });
+                previousAssignee =
+                    prevUser?.name || prevUser?.email || "Unknown User";
+            }
+
+            // Get new assignee
+            let newAssignee = "Unassigned";
+            if (data.assigneeId) {
+                const newUser = await db.user.findUnique({
+                    where: { id: data.assigneeId },
+                });
+                newAssignee = newUser?.name || newUser?.email || "Unknown User";
+            }
+
+            updates.assigneeId = data.assigneeId || null;
+
+            changeLogs.push({
+                desc: `changed assignee from '${previousAssignee}' to '${newAssignee}'`,
+                type: "ASSIGNEE_UPDATED",
+            });
+        }
+
         const updatedIssue = await db.issue.update({
             where: { id: issueId },
-            data: {
-                status: data.status,
-                priority: data.priority,
-                assigneeId: data.assigneeId || null,
-            },
+            data: updates,
             include: {
                 assignee: true,
                 reporter: true,
             },
         });
+
+        for (const log of changeLogs) {
+            await logActivity(
+                issue.projectId,
+                `${log.desc} for issue '${issue.title}'`,
+                log.type,
+                issue.id,
+                user.id
+            );
+        }
 
         return updatedIssue;
     } catch (error) {

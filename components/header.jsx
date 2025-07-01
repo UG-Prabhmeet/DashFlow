@@ -18,7 +18,7 @@ async function Header() {
                     <Link href="/">
                         <span className="flex items-center gap-2">
                             <Image
-                                src={"/logo2.png"}
+                                src={"/DashFlow_logo.png"}
                                 alt="DashFlow Logo"
                                 width={220}
                                 height={66}
@@ -28,40 +28,6 @@ async function Header() {
                         </span>
                     </Link>
                 </div>
-
-                {/* Center: Navigation Links */}
-                {/* <div className="flex-1 flex items-center justify-center gap-6">
-                    <Link
-                        href="/organization"
-                        className="text-white hover:text-[#00FFA3] font-medium transition-colors"
-                    >
-                        Organization
-                    </Link>
-                    <Link
-                        href="/faq"
-                        className="text-white hover:text-[#00FFA3] font-medium transition-colors"
-                    >
-                        Solutions
-                    </Link>
-                    <Link
-                        href="/docs"
-                        className="text-white hover:text-[#00FFA3] font-medium transition-colors"
-                    >
-                        Docs
-                    </Link>
-                    <Link
-                        href="/pricing"
-                        className="text-white hover:text-[#00FFA3] font-medium transition-colors"
-                    >
-                        Pricing
-                    </Link>
-                    <Link
-                        href="/company"
-                        className="text-white hover:text-[#00FFA3] font-medium transition-colors"
-                    >
-                        Company
-                    </Link>
-                </div> */}
 
                 {/* Right: Actions */}
                 <div className="flex items-center gap-4">

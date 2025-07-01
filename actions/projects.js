@@ -73,6 +73,7 @@ export async function getProject(projectId) {
                     },
                 },
             },
+            issues: true,
         },
     });
 
