@@ -18,7 +18,7 @@ export default async function ActivityLogPage({ params }) {
         <div className="min-h-screen px-6 py-10 space-y-8">
             <div className="flex items-center gap-3">
                 <ActivitySquare className="w-6 h-6 text-sky-500 dark:text-sky-400" />
-                <h1 className="text-3xl font-bold tracking-tight">
+                <h1 className="text-6xl gradient-title tracking-tight">
                     Activity Log
                 </h1>
             </div>

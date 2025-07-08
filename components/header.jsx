@@ -7,7 +7,6 @@ import { PenBox } from "lucide-react";
 import Image from "next/image";
 import { checkUser } from "@/lib/checkUser";
 import UserLoading from "./user-loading";
-import ThemeToggle from "./theme-toggle";
 
 async function Header() {
     await checkUser();
@@ -19,11 +18,12 @@ async function Header() {
                     <Link href="/">
                         <span className="flex items-center gap-2">
                             <Image
-                                src={"/DashFlow_logo.png"}
+                                src="/DashFlow_logo.png"
                                 alt="DashFlow Logo"
-                                width={220}
-                                height={66}
-                                className="h-16 w-auto object-contain"
+                                width={0}
+                                height={0}
+                                sizes="100vw"
+                                className="h-12 w-32 md:h-16 md:w-56 object-contain"
                                 priority
                             />
                         </span>
@@ -36,7 +36,7 @@ async function Header() {
                         <SignInButton forceRedirectUrl="/onboarding">
                             <Button
                                 variant="outline"
-                                className="border border-[#00FFA3] text-white hover:bg-[#00FFA3]/10 hover:text-[#00FFA3] px-5 py-2 rounded-full"
+                                className="bg-black/40 border border-[#00FFA3] text-[#00FFA3] hover:bg-[#00FFA3]/10 hover:text-[#00FFA3] px-5 py-2 rounded-full transition-colors"
                             >
                                 Sign In
                             </Button>
@@ -46,12 +46,12 @@ async function Header() {
                         <UserMenu />
                     </SignedIn>
 
-                    <ThemeToggle />
-
                     <Link href="/project/create">
                         <Button className="bg-[#00FFA3] text-black font-semibold px-5 py-2 rounded-full hover:bg-[#00e693]">
-                            Create Project
-                            <PenBox className="ml-2 w-4 h-4" />
+                            <span className="hidden md:inline">
+                                Create Project
+                            </span>
+                            <PenBox className="ml-0 md:ml-2 w-4 h-4" />
                         </Button>
                     </Link>
                 </div>

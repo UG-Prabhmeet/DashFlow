@@ -45,7 +45,7 @@ export default async function ProjectOverview({ params }) {
             {/* Header */}
             <div className="flex justify-between items-center flex-wrap gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold">
+                    <h1 className="text-4xl gradient-title">
                         {project.name} ({project.key})
                     </h1>
                     <p className="text-gray-900 dark:text-gray-300">

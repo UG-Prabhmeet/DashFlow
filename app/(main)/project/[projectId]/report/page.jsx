@@ -18,7 +18,7 @@ export default async function ProjectReportPage({ params }) {
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div className="flex items-center gap-3">
                     <FileBarChart2 className="w-6 h-6 text-green-400" />
-                    <h1 className="text-3xl font-bold tracking-tight">
+                    <h1 className="text-5xl gradient-title tracking-tight">
                         Project Report:{" "}
                         <span className="text-green-400">{project.name}</span>
                     </h1>

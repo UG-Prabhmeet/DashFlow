@@ -10,7 +10,7 @@ export default async function ProjectSettingsPage({ params }) {
         <div className="min-h-screen px-6 py-10 space-y-8">
             <div className="flex items-center gap-3">
                 <Settings className="w-6 h-6 text-yellow-500 dark:text-amber-400" />
-                <h1 className="text-3xl font-bold tracking-tight">
+                <h1 className="text-5xl gradient-title tracking-tight">
                     Project Settings
                 </h1>
             </div>

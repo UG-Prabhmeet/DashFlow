@@ -1,13 +1,24 @@
-import { Inter } from "next/font/google";
+import { Syne, DM_Sans } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/header";
 import { ClerkProvider } from "@clerk/nextjs";
 import { shadesOfPurple } from "@clerk/themes";
 import "react-day-picker/dist/style.css";
 import { Toaster } from "sonner";
 
-const inter = Inter({ subsets: ["latin"] });
+const syne = Syne({
+    subsets: ["latin"],
+    weight: ["400", "700"],
+    variable: "--font-syne",
+    display: "swap",
+});
+
+const dmSans = DM_Sans({
+    subsets: ["latin"],
+    weight: ["400", "700"],
+    variable: "--font-dm-sans",
+    display: "swap",
+});
 
 export const metadata = {
     title: "DashFlow | Agile Project Management",
@@ -35,15 +46,13 @@ export default function RootLayout({ children }) {
                 },
             }}
         >
-            <html lang="en">
+            <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
                 <body
-                    className={`${inter.className} animated-dotted-background`}
+                    className={`${dmSans.variable} ${syne.variable} animated-dotted-background`}
                 >
-                    <ThemeProvider attribute="class" defaultTheme="dark">
-                        <Header />
-                        <main className="min-h-screen">{children}</main>
-                        <Toaster richColors />
-                    </ThemeProvider>
+                    <Header />
+                    <main className="min-h-screen">{children}</main>
+                    <Toaster richColors />
                 </body>
             </html>
         </ClerkProvider>
