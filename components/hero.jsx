@@ -8,6 +8,10 @@ import {
 import { ArrowRight } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import faqData from "@/data/faqs.json";
+import Link from "next/link";
+import { Button } from "./ui/button";
+import { SignInButton } from "@clerk/nextjs";
+import Image from "next/image";
 
 const Hero = () => (
     <>
@@ -16,7 +20,8 @@ const Hero = () => (
             className="relative min-h-screen bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center text-white text-center px-4"
             style={{ backgroundImage: "url('/hero_background.jpg')" }}
         >
-            <div className="absolute inset-0 bg-black/40 z-0" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent z-0" />
+
             <div className="relative z-10 mx-auto">
                 <div className="mb-4">
                     <span className="inline-block bg-zinc-900 text-xs px-4 py-1 rounded-full border border-zinc-700 tracking-widest mb-6">
@@ -30,16 +35,23 @@ const Hero = () => (
                     Real-time collaboration. Visual progress. Powerful reports
                 </p>
                 <div className="flex justify-center gap-4 mb-16">
-                    <button className="bg-white text-black font-medium px-6 py-2 rounded-full shadow hover:bg-zinc-100 transition">
-                        View on GitHub
-                    </button>
-                    <button className="bg-transparent border-none text-white font-medium px-6 py-2 rounded-full flex items-center gap-2 hover:underline transition">
-                        Launch Project <span className="text-xl">→</span>
-                    </button>
+                    <SignInButton forceRedirectUrl="/onboarding">
+                        <button className="bg-black text-white font-medium px-6 py-2 rounded-full shadow hover:bg-zinc-100 transition">
+                            Get Started
+                        </button>
+                    </SignInButton>
+                    <Link
+                        href="https://github.com/UG-Prabhmeet/DashFlow"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <button className="bg-white text-black font-medium px-6 py-2 rounded-full shadow hover:bg-zinc-100 transition">
+                            View on GitHub
+                        </button>
+                    </Link>
                 </div>
             </div>
         </section>
-
         <section className="w-full flex flex-col md:flex-row items-stretch justify-center py-24 px-4 pl-3 md:pl-30 bg-[#0b0b0e]">
             {/* Left: Main Text */}
             <div className="flex-1 flex flex-col justify-center max-w-xl mx-auto md:mx-0 pl-12">
@@ -79,156 +91,179 @@ const Hero = () => (
                 </ul>
             </div>
         </section>
-
         <section className="bg-black text-white py-24 px-4">
             <h2 className="text-4xl md:text-5xl gradient-title text-center mb-20">
                 Why You Will Love It
             </h2>
 
-            <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+            {/* Feature 1: Kanban Board */}
+            <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 mb-24">
                 <div className="flex-1 text-left">
                     <h3 className="text-2xl md:text-3xl font-semibold mb-4 text-zinc-100">
-                        Intuitive Project Planning
+                        Effortless Task Management
                     </h3>
-                    <p className="text-zinc-300 text-lg">
-                        With DashFlow, you eliminate the chaos of spreadsheets,
-                        scattered tasks, and unclear priorities. Plan your
-                        sprints, assign issues, and visualize team load from one
-                        sleek interface — with role-based access and real-time
-                        updates.
+                    <p className="text-zinc-300 text-lg mb-4">
+                        Visualize your entire workflow in one dynamic Kanban
+                        board. Move tasks with drag-and-drop ease, assign issues
+                        to team members, and track progress from backlog to done
+                        — all in real-time.
                     </p>
+                    <ul className="text-zinc-400 list-disc pl-5 space-y-1 text-base">
+                        <li>Column-based board for clear stage visibility</li>
+                        <li>Real-time collaboration & instant sync</li>
+                        <li>Drag-and-drop interaction</li>
+                        <li>Filter tasks by status, priority, or assignee</li>
+                    </ul>
                 </div>
-
-                <div className="rounded-2xl overflow-hidden w-full max-w-xl shadow-lg">
-                    <img
-                        src="/path/to/6429d45c-689d-4ae8-bd4f-dd827f579e8c.png"
-                        alt="DashFlow pipeline diagram"
-                        className="w-full h-auto object-contain"
+                <div className="relative rounded-2xl overflow-hidden w-full max-w-xl shadow-lg aspect-video">
+                    <Image
+                        src="/kanban_board.png"
+                        alt="Kanban board interface"
+                        fill
+                        className="object-contain"
                     />
                 </div>
             </div>
 
-            <section className="bg-black text-white py-24 px-4">
-                <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 mb-24">
-                    {/* Left: Image */}
-                    <div className="flex-1 flex justify-center">
-                        <div className="rounded-2xl overflow-hidden w-full max-w-xl shadow-lg">
-                            <img
-                                src="/images/automated-insights.png"
-                                alt="DashFlow automated insights"
-                                className="w-full h-auto object-contain"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="flex-1 text-left">
-                        <h3 className="text-2xl md:text-3xl font-semibold mb-4 text-zinc-100">
-                            Automated Progress & Insights
-                        </h3>
-                        <p className="text-zinc-300 text-lg">
-                            DashFlow lets you focus on work, not admin. With
-                            real-time dashboards, sprint analytics, and
-                            automated reporting, you always know how your team
-                            is progressing — without lifting a finger.
-                        </p>
-                    </div>
-                </div>
-                <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
-                    <div className="flex-1 text-left">
-                        <h3 className="text-2xl md:text-3xl font-semibold mb-4 text-zinc-100">
-                            Intuitive Project Planning
-                        </h3>
-                        <p className="text-zinc-300 text-lg mb-4">
-                            With DashFlow, eliminate the chaos of scattered
-                            tools and spreadsheets. Plan sprints, assign issues,
-                            and manage priorities in one sleek interface with
-                            role-based access and real-time sync.
-                        </p>
-                        <ul className="text-zinc-400 list-disc pl-5 space-y-1 text-base">
-                            <li>Create and assign tasks with ease</li>
-                            <li>Drag-and-drop Kanban board</li>
-                            <li>Sprint creation and timeline tracking</li>
-                            <li>Permissions for admins and members</li>
-                            <li>
-                                Burndown charts, lead time & velocity insights
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div className="rounded-2xl overflow-hidden w-full max-w-xl shadow-lg">
-                        <img
-                            src="/images/project-planning.png"
-                            alt="Project planning diagram"
-                            className="w-full h-auto object-contain"
+            {/* Feature 2: Sprint Analytics */}
+            <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12 mb-24">
+                <div className="flex-1 flex justify-center">
+                    <div className="relative rounded-2xl overflow-hidden w-full max-w-xl shadow-lg aspect-video">
+                        <Image
+                            src="/sprint_analytics.png"
+                            alt="Sprint analytics dashboard"
+                            fill
+                            className="object-contain"
                         />
                     </div>
                 </div>
-            </section>
-        </section>
+                <div className="flex-1 text-left">
+                    <h3 className="text-2xl md:text-3xl font-semibold mb-4 text-zinc-100">
+                        Data-Driven Sprint Analytics
+                    </h3>
+                    <p className="text-zinc-300 text-lg mb-4">
+                        Stay ahead with detailed sprint metrics. Track team
+                        velocity, burndown rates, lead time, and more — with
+                        charts that auto-update to reflect real-time progress
+                        and blockers.
+                    </p>
+                    <ul className="text-zinc-400 list-disc pl-5 space-y-1 text-base">
+                        <li>Visual burndown and velocity charts</li>
+                        <li>Identify bottlenecks early</li>
+                        <li>Exportable sprint reports</li>
+                        <li>Measure team efficiency over time</li>
+                    </ul>
+                </div>
+            </div>
 
+            {/* Feature 3: Organisation Projects Page */}
+            <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+                <div className="flex-1 text-left">
+                    <h3 className="text-2xl md:text-3xl font-semibold mb-4 text-zinc-100">
+                        Unified Project Overview
+                    </h3>
+                    <p className="text-zinc-300 text-lg mb-4">
+                        See everything your team is working on across all
+                        projects in one place. Easily navigate between active
+                        sprints, archived tasks, and organization-level metrics.
+                    </p>
+                    <ul className="text-zinc-400 list-disc pl-5 space-y-1 text-base">
+                        <li>Centralized view of all organization projects</li>
+                        <li>
+                            Quick access to each project's board, settings, and
+                            members
+                        </li>
+                        <li>Role-based visibility and controls</li>
+                        <li>Ideal for cross-functional teams and managers</li>
+                    </ul>
+                </div>
+                <div className="relative rounded-2xl overflow-hidden w-full max-w-xl shadow-lg aspect-video">
+                    <Image
+                        src="/organization_projects.png"
+                        alt="Organization projects overview"
+                        fill
+                        className="object-contain"
+                    />
+                </div>
+            </div>
+        </section>
         <section className="bg-black text-white py-24 px-4">
             <h2 className="text-4xl md:text-5xl gradient-title text-center mb-16 text-zinc-100">
                 Learn More About Building Better Teams
             </h2>
             <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Feature: Project Overview */}
                 <div className="bg-zinc-900 border border-zinc-700 rounded-2xl overflow-hidden shadow-lg flex flex-col">
-                    <img
-                        src="/images/blog/agile-planning.jpg"
-                        alt="Agile Planning"
-                        className="w-full h-48 object-cover bg-zinc-800"
-                    />
+                    <div className="relative w-full h-48 bg-zinc-800">
+                        <Image
+                            src="/project_overview.png"
+                            alt="Project Overview"
+                            fill
+                            className="object-cover"
+                        />
+                    </div>
                     <div className="p-6 flex flex-col flex-1">
                         <span className="inline-block bg-zinc-800 text-xs px-3 py-1 rounded-full mb-4 tracking-widest text-zinc-200">
-                            PRODUCTIVITY
+                            OVERVIEW
                         </span>
                         <h3 className="text-lg font-semibold mb-1">
-                            How to Plan Sprints That Actually Deliver
+                            Stay on Top with a Project Overview That Makes Sense
                         </h3>
                         <p className="text-zinc-400 text-sm mb-4">
-                            Learn how structured sprint planning leads to
-                            focused teams and faster shipping cycles.
+                            Get a bird’s-eye view of everything — tasks,
+                            timelines, statuses, and goals — across your
+                            project, all in one centralized dashboard.
                         </p>
                     </div>
                 </div>
 
+                {/* Feature: Activity Log */}
                 <div className="bg-zinc-900 border border-zinc-700 rounded-2xl overflow-hidden shadow-lg flex flex-col">
-                    <img
-                        src="/images/blog/analytics-insights.jpg"
-                        alt="Analytics & Insights"
-                        className="w-full h-48 object-cover bg-zinc-800"
-                    />
+                    <div className="relative w-full h-48 bg-zinc-800">
+                        <Image
+                            src="/activity_log.png"
+                            alt="Activity Log"
+                            fill
+                            className="object-cover"
+                        />
+                    </div>
                     <div className="p-6 flex flex-col flex-1">
                         <span className="inline-block bg-zinc-800 text-xs px-3 py-1 rounded-full mb-4 tracking-widest text-zinc-200">
-                            INSIGHTS
+                            ACTIVITY
                         </span>
                         <h3 className="text-lg font-semibold mb-1">
-                            What Project Analytics Reveal About Team Health
+                            Trace Every Move with Real-Time Activity Logs
                         </h3>
                         <p className="text-zinc-400 text-sm mb-4">
-                            Uncover the metrics that matter: velocity, lead
-                            time, and team efficiency — all from your DashFlow
-                            reports.
+                            Whether it's a task update or a sprint change, keep
+                            track of every action with clear, timestamped logs
+                            that make team accountability effortless.
                         </p>
                     </div>
                 </div>
 
+                {/* Feature: Clerk Organization Support */}
                 <div className="bg-zinc-900 border border-zinc-700 rounded-2xl overflow-hidden shadow-lg flex flex-col">
-                    <img
-                        src="/images/blog/kanban-vs-sprint.jpg"
-                        alt="Kanban vs Sprint"
-                        className="w-full h-48 object-cover bg-zinc-800"
-                    />
+                    <div className="relative w-full h-48 bg-zinc-800">
+                        <Image
+                            src="/clerk_invitation.png"
+                            alt="Clerk organization support"
+                            fill
+                            className="object-cover"
+                        />
+                    </div>
                     <div className="p-6 flex flex-col flex-1">
                         <span className="inline-block bg-zinc-800 text-xs px-3 py-1 rounded-full mb-4 tracking-widest text-zinc-200">
-                            WORKFLOWS
+                            ACCESS CONTROL
                         </span>
                         <h3 className="text-lg font-semibold mb-1">
-                            Kanban or Sprints? Choosing the Right Flow for Your
-                            Team
+                            Scalable Organization Management with Clerk
                         </h3>
                         <p className="text-zinc-400 text-sm mb-4">
-                            Compare Kanban and Sprint workflows with real-world
-                            examples to help you choose what fits best.
+                            Support multiple organizations per user, invite
+                            teammates with a few clicks, and control access by
+                            roles — all powered by Clerk's secure, flexible
+                            identity infrastructure.
                         </p>
                     </div>
                 </div>
@@ -288,30 +323,38 @@ const Hero = () => (
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
                 <div className="flex flex-col items-center md:items-start gap-4">
                     <div className="flex items-center gap-2">
-                        <span className="text-xl font-semibold text-white">
-                            DashFlow
-                        </span>
+                        <Image
+                            src="/DashFlow_logo.png"
+                            alt="DashFlow Logo"
+                            width={0}
+                            height={0}
+                            sizes="100vw"
+                            className="h-12 w-32 md:h-16 md:w-56 object-contain"
+                            priority
+                        />
                     </div>
                     <div className="flex gap-4 mt-2 text-zinc-400">
-                        <a
-                            href="https://linkedin.com/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="LinkedIn"
-                            className="hover:text-white transition"
-                        >
-                            <FaLinkedin size={24} />
-                        </a>
+                        <div className="flex gap-4">
+                            <Link
+                                href="https://www.linkedin.com/in/prabhmeet-singh-742189319"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="LinkedIn"
+                                className="hover:text-white transition"
+                            >
+                                <FaLinkedin size={24} />
+                            </Link>
 
-                        <a
-                            href="https://github.com/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="GitHub"
-                            className="hover:text-white transition"
-                        >
-                            <FaGithub size={24} />
-                        </a>
+                            <Link
+                                href="https://github.com/UG-Prabhmeet/DashFlow"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="GitHub"
+                                className="hover:text-white transition"
+                            >
+                                <FaGithub size={24} />
+                            </Link>
+                        </div>
                     </div>
                 </div>
                 <div className="text-zinc-400 text-sm text-center md:text-right mt-6 md:mt-0">

@@ -27,8 +27,7 @@ export default function IssueBreakdown({ issues }) {
 
     return (
         <div className="p-6 bg-zinc-900 text-white border border-zinc-700 rounded-2xl shadow-lg">
-            <h2 className="text-2xl font-bold mb-4 border-b border-zinc-700 pb-2 flex items-center gap-2">
-                <PieChart className="w-5 h-5 text-pink-400" />
+            <h2 className="text-2xl font-bold mb-4 border-b border-zinc-700 pb-2">
                 Issue Breakdown
             </h2>{" "}
             <div className="grid md:grid-cols-2 gap-6">
@@ -60,6 +59,7 @@ export default function IssueBreakdown({ issues }) {
                         </span>
                     }
                     data={tagCounts}
+                    limit={3}
                 />
                 <BreakdownSection
                     title={
@@ -69,14 +69,17 @@ export default function IssueBreakdown({ issues }) {
                         </span>
                     }
                     data={assigneeCounts}
+                    limit={3}
                 />
             </div>
         </div>
     );
 }
 
-function BreakdownSection({ title, data, type }) {
-    const entries = Object.entries(data).sort(([a], [b]) => a.localeCompare(b));
+function BreakdownSection({ title, data, type, limit }) {
+    const entries = Object.entries(data)
+        .sort(([, aCount], [, bCount]) => bCount - aCount) // Sort by count DESC
+        .slice(0, limit); // Limit the number of entries shown
 
     return (
         <div className="bg-zinc-800 p-4 rounded-xl border border-zinc-700">

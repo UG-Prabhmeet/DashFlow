@@ -71,7 +71,7 @@ export default function SprintCreationForm({
                 <Button
                     className="mt-2"
                     onClick={() => setShowForm(!showForm)}
-                    variant={!showForm ? "default" : "destructive"}
+                    variant={!showForm ? "outline" : "destructive"}
                 >
                     {!showForm ? "Create New Sprint" : "Cancel"}
                 </Button>
@@ -81,7 +81,7 @@ export default function SprintCreationForm({
                     <CardContent>
                         <form
                             onSubmit={handleSubmit(onSubmit)}
-                            className="flex gap-4 items-end"
+                            className="flex flex-col gap-4 sm:flex-row sm:items-end"
                         >
                             <div className="flex-1">
                                 <label
@@ -94,7 +94,7 @@ export default function SprintCreationForm({
                                     id="name"
                                     {...register("name")}
                                     readOnly
-                                    className="bg-slate-950"
+                                    className="bg-slate-100"
                                 />
                                 {errors.name && (
                                     <p className="text-red-500 text-sm mt-1">
@@ -102,7 +102,7 @@ export default function SprintCreationForm({
                                     </p>
                                 )}
                             </div>
-                            <div className="flex-1">
+                            <div className="w-full sm:flex-1">
                                 <label className="block text-sm font-medium mb-1">
                                     Sprint Duration
                                 </label>
@@ -114,10 +114,7 @@ export default function SprintCreationForm({
                                             <PopoverTrigger asChild>
                                                 <Button
                                                     variant="outline"
-                                                    className={`w-full justify-start text-left font-normal bg-slate-950 ${
-                                                        !dateRange &&
-                                                        "text-muted-foreground"
-                                                    }`}
+                                                    className={`w-full justify-start text-left font-normal bg-slate-100 text-black`}
                                                 >
                                                     <CalendarIcon className="mr-2 h-4 w-4" />
                                                     {dateRange.from &&
@@ -137,7 +134,7 @@ export default function SprintCreationForm({
                                                 </Button>
                                             </PopoverTrigger>
                                             <PopoverContent
-                                                className="w-auto bg-slate-900"
+                                                className="w-auto bg-slate-100"
                                                 align="start"
                                             >
                                                 <DayPicker

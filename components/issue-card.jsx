@@ -61,7 +61,7 @@ export default function IssueCard({
 
                 <CardContent className="flex gap-2 -mt-3">
                     {showStatus && <Badge>{issue.status}</Badge>}
-                    <Badge variant="outline" className="-ml-1">
+                    <Badge variant="secondary" className="-ml-1">
                         {issue.priority}
                     </Badge>
                 </CardContent>

@@ -21,7 +21,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata = {
-    title: "DashFlow | Agile Project Management",
+    title: "DashFlow | Agile Project Management App",
     description:
         "DashFlow is a project management app to help teams organize, track, and collaborate on projects efficiently.",
 };

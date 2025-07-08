@@ -48,7 +48,7 @@ export default async function ProjectOverview({ params }) {
                     <h1 className="text-4xl gradient-title">
                         {project.name} ({project.key})
                     </h1>
-                    <p className="text-gray-900 dark:text-gray-300">
+                    <p className="text-gray-300">
                         {project.description || "No description provided."}
                     </p>
                     <p className="text-gray-400 text-sm">
@@ -80,15 +80,13 @@ export default async function ProjectOverview({ params }) {
             </div>
 
             <div className="grid grid-cols-3 gap-4">
-                <div className="p-4 rounded-lg shadow bg-white dark:bg-gray-800">
-                    <h2 className="font-semibold text-gray-700 dark:text-gray-200">
+                <div className="p-4 rounded-lg shadow bg-white">
+                    <h2 className="font-semibold text-gray-700">
                         Total Issues
                     </h2>
-                    <p className="text-2xl text-gray-900 dark:text-white">
-                        {totalIssues}
-                    </p>
+                    <p className="text-2xl text-gray-900">{totalIssues}</p>
                 </div>
-                <div className="p-4 rounded-lg shadow bg-white dark:bg-gray-800">
+                <div className="p-4 rounded-lg shadow bg-white">
                     <h2 className="font-semibold text-gray-700 dark:text-gray-200">
                         Total Sprints
                     </h2>
@@ -97,7 +95,7 @@ export default async function ProjectOverview({ params }) {
                     </p>
                 </div>
 
-                <div className="p-4 rounded-lg shadow bg-white dark:bg-gray-800">
+                <div className="p-4 rounded-lg shadow bg-white">
                     <h2 className="font-semibold text-gray-700 dark:text-gray-200">
                         Sprint Status
                     </h2>
@@ -123,7 +121,7 @@ export default async function ProjectOverview({ params }) {
                 </div>
             </div>
 
-            <div className="p-4 rounded-lg shadow bg-white dark:bg-gray-800">
+            <div className="p-4 rounded-lg shadow bg-white">
                 <h2 className="font-semibold mb-2 text-gray-700 dark:text-gray-200">
                     Project Progress
                 </h2>
@@ -138,7 +136,7 @@ export default async function ProjectOverview({ params }) {
                 </p>
             </div>
 
-            <div className="p-4 rounded-lg shadow bg-white dark:bg-gray-800">
+            <div className="p-4 rounded-lg shadow bg-white">
                 <h2 className="font-semibold mb-2 text-gray-700 dark:text-gray-200">
                     Active Sprint
                 </h2>
@@ -152,7 +150,9 @@ export default async function ProjectOverview({ params }) {
             </div>
 
             <div>
-                <h2 className="text-xl font-semibold mb-2">Project Members</h2>
+                <h2 className="text-xl font-semibold mb-2 text-gray-300">
+                    Project Members
+                </h2>
                 <div className="flex flex-wrap gap-4 items-center">
                     {members.map((member) => {
                         const fullName = member.name?.trim() || "";
@@ -176,11 +176,11 @@ export default async function ProjectOverview({ params }) {
                                         src={member.imageUrl}
                                         className="rounded-full ring h-8 w-8 object-cover"
                                     />
-                                    <AvatarFallback className="h-8 w-8 text-xs flex items-center justify-center bg-gray-300 dark:bg-gray-600">
+                                    <AvatarFallback className="h-8 w-8 text-xs flex items-center justify-center bg-gray-300">
                                         {firstName.charAt(0) || "?"}
                                     </AvatarFallback>
                                 </Avatar>
-                                <span className="text-sm text-gray-800 dark:text-gray-200">
+                                <span className="text-sm text-gray-200">
                                     {displayName}
                                 </span>
                             </div>
@@ -190,7 +190,7 @@ export default async function ProjectOverview({ params }) {
             </div>
 
             <div>
-                <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">
+                <h2 className="text-xl font-semibold mb-2 text-gray-100">
                     Recent Activity
                 </h2>
                 <div className="space-y-2 text-sm">

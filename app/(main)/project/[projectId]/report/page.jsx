@@ -7,17 +7,15 @@ import ProjectProgress from "./_components/project-progress";
 import SprintSummary from "./_components/sprint-summary";
 import ProjectTimeline from "./_components/ProjectTimeline";
 import { VelocityChart } from "./_components/VelocityChart";
-import { FileBarChart2 } from "lucide-react";
 
 export default async function ProjectReportPage({ params }) {
     const { projectId } = await params;
     const project = await getProjectReport(projectId);
 
     return (
-        <div className="px-6 py-10 bg-black min-h-screen text-white space-y-10">
+        <div className="pb-10 min-h-screen text-white space-y-10">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div className="flex items-center gap-3">
-                    <FileBarChart2 className="w-6 h-6 text-green-400" />
                     <h1 className="text-5xl gradient-title tracking-tight">
                         Project Report:{" "}
                         <span className="text-green-400">{project.name}</span>

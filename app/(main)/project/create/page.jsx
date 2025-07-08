@@ -84,7 +84,7 @@ export default function CreateProjectPage() {
                         id="name"
                         type="text"
                         {...register("name")}
-                        className="bg-slate-950"
+                        className="bg-slate-100"
                         placeholder="Project Name"
                     />
                     {errors.name && (
@@ -98,7 +98,7 @@ export default function CreateProjectPage() {
                         id="key"
                         type="text"
                         {...register("key")}
-                        className="bg-slate-950"
+                        className="bg-slate-100"
                         placeholder="Project Key (Ex: RCYT)"
                     />
                     {errors.key && (
@@ -111,7 +111,7 @@ export default function CreateProjectPage() {
                     <Textarea
                         id="description"
                         {...register("description")}
-                        className="bg-slate-950 h-28"
+                        className="bg-slate-100 h-28"
                         placeholder="Project Description"
                     />
                     {errors.description && (

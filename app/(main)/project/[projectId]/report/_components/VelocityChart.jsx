@@ -22,8 +22,7 @@ export function VelocityChart({ sprints }) {
 
     return (
         <div className="p-6 bg-zinc-900 text-white border border-zinc-700 rounded-2xl shadow-lg">
-            <h2 className="text-2xl font-bold mb-4 border-b border-zinc-700 pb-2 flex items-center gap-2">
-                <BarChart4 className="w-5 h-5 text-emerald-400" />
+            <h2 className="text-2xl font-bold mb-4 border-b border-zinc-700 pb-2">
                 Sprint Velocity
             </h2>
             <div className="w-full h-[280px]">

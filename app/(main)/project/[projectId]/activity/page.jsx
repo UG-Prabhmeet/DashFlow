@@ -15,14 +15,12 @@ export default async function ActivityLogPage({ params }) {
     const members = await getOrganizationUsers(project.organizationId);
 
     return (
-        <div className="min-h-screen px-6 py-10 space-y-8">
-            <div className="flex items-center gap-3">
-                <ActivitySquare className="w-6 h-6 text-sky-500 dark:text-sky-400" />
-                <h1 className="text-6xl gradient-title tracking-tight">
-                    Activity Log
-                </h1>
-            </div>
-            <div className="bg-muted border border-border rounded-2xl shadow-lg p-6">
+        <div className="min-h-screen pb-10 space-y-8">
+            <h1 className="text-5xl gradient-title tracking-tight">
+                Activity Log
+            </h1>
+
+            <div className="bg-muted-foreground rounded-2xl shadow-lg p-6">
                 <ActivityFilters activity={activity} members={members} />
             </div>
         </div>

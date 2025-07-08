@@ -8,7 +8,8 @@ export default function ProjectLayout({ children }) {
         <SidebarProvider>
             <AppSidebar />
             <div className="container mx-auto">
-                <SidebarTrigger />
+                <SidebarTrigger className="bg-[--sidebar-accent] text-[--sidebar-accent-foreground] bg-[oklch(0.9_0_0)] px-2 py-1 rounded-md" />
+
                 <Suspense
                     fallback={<BarLoader width={"100%"} color="#36d7b7" />}
                 >

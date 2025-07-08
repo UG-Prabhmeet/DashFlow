@@ -243,12 +243,6 @@ export default function IssueDetailsDialog({
                             </h4>
                             <div className="flex items-center space-x-2">
                                 <UserAvatar user={issue.reporter} />
-                                <span className="text-sm">
-                                    {getDisplayName(
-                                        issue.reporter,
-                                        issue.project?.adminIds || []
-                                    )}
-                                </span>
                             </div>
                         </div>
                     </div>

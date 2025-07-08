@@ -59,7 +59,7 @@ export default function ActivityFilters({ activity, members }) {
             <div className="space-y-4">
                 <div className="flex flex-col sm:flex-row gap-4 mt-6">
                     <Input
-                        className="w-full sm:w-72"
+                        className="w-full bg-background sm:w-72"
                         placeholder="Search activity..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
@@ -136,7 +136,7 @@ export default function ActivityFilters({ activity, members }) {
                     filtered.map((a) => (
                         <div
                             key={a.id}
-                            className="p-3 rounded shadow text-foreground"
+                            className="p-3 rounded bg-background shadow text-foreground"
                         >
                             <p>
                                 <span className="font-semibold">

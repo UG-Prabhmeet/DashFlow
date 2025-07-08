@@ -11,8 +11,7 @@ export default function SprintSummary({ sprints }) {
     return (
         <div className="p-6 bg-zinc-900 text-white border border-zinc-700 rounded-2xl shadow-lg">
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold border-b border-zinc-700 pb-2 flex items-center gap-2">
-                    <Flag className="w-5 h-5 text-indigo-400" />
+                <h2 className="text-2xl font-bold mb-4 border-b border-zinc-700 pb-2">
                     Sprint Summary
                 </h2>
                 <select

@@ -1,7 +1,6 @@
 import { getProject } from "@/actions/projects";
 import { notFound } from "next/navigation";
 import SprintCreationForm from "../../_components/create-sprint";
-import SprintStats from "../../_components/sprint-stats";
 import SprintBoard from "../../_components/sprint-board";
 
 export default async function ProjectPage({ params }) {
@@ -23,7 +22,6 @@ export default async function ProjectPage({ params }) {
 
             {project.sprints.length > 0 ? (
                 <>
-                    <SprintStats issues={project.sprints[0].issues} />
                     <SprintBoard
                         sprints={project.sprints}
                         projectId={projectId}
