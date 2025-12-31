@@ -22,16 +22,19 @@ export default function BurndownChart({ sprints }) {
             (1000 * 60 * 60 * 24)
     );
 
+    // Analytics: Generate data points for each day of the sprint
     const data = Array.from({ length: sprintDays + 1 }, (_, day) => {
         const date = new Date(activeSprint.startDate);
         date.setDate(date.getDate() + day);
 
+        // Find how many issues were marked 'DONE' up to this specific day
         const closedTillDate = closedIssues.filter(
             (i) => new Date(i.updatedAt) <= date
         ).length;
 
         return {
             day: date.toLocaleDateString("en-GB"),
+            // Remaining issues = Total - Cumulative closed
             remaining: totalIssues - closedTillDate,
         };
     });

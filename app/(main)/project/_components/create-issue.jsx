@@ -121,6 +121,7 @@ export default function IssueCreationDrawer({
                             >
                                 Description
                             </label>
+                            {/* Markdown: Integrated editor for rich text descriptions */}
                             <Controller
                                 name="description"
                                 control={control}

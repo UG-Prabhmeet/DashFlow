@@ -16,6 +16,7 @@ import IssueCreationDrawer from "./create-issue";
 import IssueCard from "@/components/issue-card";
 import BoardFilters from "./board-filters";
 
+// for reordering issues within the same column 
 function reorder(list, startIndex, endIndex) {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
@@ -24,6 +25,7 @@ function reorder(list, startIndex, endIndex) {
     return result;
 }
 
+// sprint kanban board
 export default function SprintBoard({ sprints, projectId, orgId }) {
     const [currentSprint, setCurrentSprint] = useState(
         sprints.find((spr) => spr.status === "ACTIVE") || sprints[0]
@@ -42,6 +44,8 @@ export default function SprintBoard({ sprints, projectId, orgId }) {
 
     const [filteredIssues, setFilteredIssues] = useState(issues);
 
+    // Filters: Callback passed to BoardFilters component
+    // It updates the local 'filteredIssues' state which is used for rendering the board
     const handleFilterChange = (newFilteredIssues) => {
         setFilteredIssues(newFilteredIssues);
     };
@@ -67,7 +71,10 @@ export default function SprintBoard({ sprints, projectId, orgId }) {
         error: updateIssuesError,
     } = useFetch(updateIssueOrder);
 
+    // Kanban: Handle the end of a drag event
     const onDragEnd = async (result) => {
+
+        // updates are not allowed for planned and completed sprints
         if (currentSprint.status === "PLANNED") {
             toast.warning("Start the sprint to update board");
             return;
@@ -82,6 +89,7 @@ export default function SprintBoard({ sprints, projectId, orgId }) {
             return;
         }
 
+        // no update if issue is dropped in the same position
         if (
             destination.droppableId === source.droppableId &&
             destination.index === source.index
@@ -91,51 +99,59 @@ export default function SprintBoard({ sprints, projectId, orgId }) {
 
         const newOrderedData = [...issues];
 
-        // source and destination list
+        // issues list of source column
         const sourceList = newOrderedData.filter(
             (list) => list.status === source.droppableId
         );
 
+        // issues list of destination column
         const destinationList = newOrderedData.filter(
             (list) => list.status === destination.droppableId
         );
 
         if (source.droppableId === destination.droppableId) {
+
+            // Reorder within the same column
             const reorderedCards = reorder(
                 sourceList,
                 source.index,
                 destination.index
             );
 
+            // update local order values
             reorderedCards.forEach((card, i) => {
                 card.order = i;
             });
         } else {
-            // remove card from the source list
+            // Move between different columns
             const [movedCard] = sourceList.splice(source.index, 1);
 
-            // assign the new list id to the moved card
+            // update the status of the moved card to the new column
             movedCard.status = destination.droppableId;
 
-            // add new card to the destination list
+            // insert into the destination list at the correct index
             destinationList.splice(destination.index, 0, movedCard);
 
+            // reindexing both source and destination lists to ensure consistency
             sourceList.forEach((card, i) => {
                 card.order = i;
             });
 
-            // update the order for each card in destination list
             destinationList.forEach((card, i) => {
                 card.order = i;
             });
         }
 
+        // Kanban: Optimistic UI update
+        // updates the local state immediately for a smooth UX
         const sortedIssues = newOrderedData.sort((a, b) => a.order - b.order);
         setIssues(newOrderedData, sortedIssues);
 
+        // Kanban: Persist the changes to the database
         updateIssueOrderFn(sortedIssues);
     };
 
+    // error handling
     if (issuesError) return <div>Error loading issues</div>;
 
     return (
@@ -147,6 +163,7 @@ export default function SprintBoard({ sprints, projectId, orgId }) {
                 projectId={projectId}
             />
 
+            // board filters
             {issues && !issuesLoading && (
                 <BoardFilters
                     issues={issues}
@@ -157,13 +174,19 @@ export default function SprintBoard({ sprints, projectId, orgId }) {
             {updateIssuesError && (
                 <p className="text-red-500 mt-2">{updateIssuesError.message}</p>
             )}
+
+            // loading state
             {(updateIssuesLoading || issuesLoading) && (
                 <BarLoader className="mt-4" width={"100%"} color="#36d7b7" />
             )}
 
+            // kanban board
+            // drag and drop context calls onDragEnd when a drag ends
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 p-4 bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-xl">
                     {statuses.map((column) => (
+
+                        // droppable columns -> droppable id = column status
                         <Droppable key={column.key} droppableId={column.key}>
                             {(provided) => (
                                 <div
@@ -180,6 +203,8 @@ export default function SprintBoard({ sprints, projectId, orgId }) {
                                                 issue.status === column.key
                                         )
                                         .map((issue, index) => (
+
+                                            // draggable issue card -> draggable id = issue id
                                             <Draggable
                                                 key={issue.id}
                                                 draggableId={issue.id}

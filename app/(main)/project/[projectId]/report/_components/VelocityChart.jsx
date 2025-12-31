@@ -11,10 +11,13 @@ import {
 } from "recharts";
 
 export function VelocityChart({ sprints }) {
+    // Analytics: Transform sprint data for the BarChart
+    // We only show velocity for sprints that are ACTIVE or COMPLETED
     const data = sprints
         .filter((s) => s.status !== "PLANNED")
         .map((s) => ({
             name: s.name,
+            // Count completed issues for this sprint
             closed: s.issues.filter((i) => i.status === "DONE").length,
         }));
 

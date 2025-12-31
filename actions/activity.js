@@ -3,6 +3,7 @@
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 
+// activity for a project
 export async function getRecentProjectActivity(projectId) {
     const { userId, orgId } = await auth();
 

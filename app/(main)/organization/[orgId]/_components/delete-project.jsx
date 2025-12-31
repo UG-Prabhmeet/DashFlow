@@ -19,6 +19,7 @@ export default function DeleteProject({ projectId }) {
         data: deleted,
     } = useFetch(deleteProject);
 
+    // RBAC: Check if the user has admin role to conditionally render delete functionality
     const isAdmin = membership?.role === "org:admin";
 
     const handleDelete = async () => {

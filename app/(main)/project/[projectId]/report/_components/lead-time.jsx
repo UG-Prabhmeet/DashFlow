@@ -1,21 +1,25 @@
 import { Timer } from "lucide-react";
 
 export default function LeadTimeStats({ issues }) {
+    // Analytics: Filter only completed issues to calculate lead time
     const completed = issues.filter(
         (i) => i.status === "DONE" && i.createdAt && i.updatedAt
     );
+    // Lead time per issue: Days between creation and completion
     const leadTimes = completed.map(
         (i) =>
             (new Date(i.updatedAt) - new Date(i.createdAt)) /
             (1000 * 60 * 60 * 24)
     );
 
+    // Analytics: Calculate aggregate metrics
     const avg = leadTimes.length
         ? (leadTimes.reduce((a, b) => a + b) / leadTimes.length).toFixed(1)
         : 0;
     const min = leadTimes.length ? Math.min(...leadTimes).toFixed(1) : 0;
     const max = leadTimes.length ? Math.max(...leadTimes).toFixed(1) : 0;
     const sorted = [...leadTimes].sort((a, b) => a - b);
+    // Median calculation for better "typical" case insight
     const median = leadTimes.length
         ? (sorted.length % 2 === 0
               ? (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2

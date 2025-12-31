@@ -4,6 +4,7 @@ import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { logActivity } from "@/utils/activity";
 
+// get issues for a sprint
 export async function getIssuesForSprint(sprintId) {
     const { userId, orgId } = await auth();
 
@@ -39,10 +40,11 @@ export async function createIssue(projectId, data) {
 
     const newOrder = lastIssue ? lastIssue.order + 1 : 0;
 
+    // create a new issue with markdown content and metadata
     const issue = await db.issue.create({
         data: {
             title: data.title,
-            description: data.description,
+            description: data.description, // Stores the raw markdown string
             status: data.status,
             priority: data.priority,
             projectId: projectId,
@@ -59,6 +61,7 @@ export async function createIssue(projectId, data) {
         },
     });
 
+    // create activity log in activity table
     await logActivity(
         projectId,
         `created issue '${issue.title}'`,
@@ -70,6 +73,7 @@ export async function createIssue(projectId, data) {
     return issue;
 }
 
+// updating issue order, status in db after optimistic ui update of kanban dnd
 export async function updateIssueOrder(updatedIssues) {
     const { userId, orgId } = await auth();
 
@@ -77,6 +81,8 @@ export async function updateIssueOrder(updatedIssues) {
         throw new Error("Unauthorized");
     }
 
+    // bulk update issue order and status (Kanban DnD)
+    // Using a transaction to ensure all updates succeed or fail together
     await db.$transaction(async (prisma) => {
         for (const issue of updatedIssues) {
             await prisma.issue.update({
@@ -92,6 +98,7 @@ export async function updateIssueOrder(updatedIssues) {
     return { success: true };
 }
 
+// delete issue
 export async function deleteIssue(issueId) {
     const { userId, orgId } = await auth();
 
@@ -114,6 +121,7 @@ export async function deleteIssue(issueId) {
         throw new Error("Issue not found");
     }
 
+    // only admin or reporter can delete an issue
     if (
         issue.reporterId !== user.id &&
         !issue.project.adminIds.includes(user.id)
@@ -123,6 +131,7 @@ export async function deleteIssue(issueId) {
 
     await db.issue.delete({ where: { id: issueId } });
 
+    // creates an activity log in activity table
     await logActivity(
         issue.projectId,
         `deleted issue '${issue.title}'`,
@@ -164,6 +173,7 @@ export async function updateIssue(issueId, data) {
             throw new Error("Unauthorized");
         }
 
+        // only admin or reporter can update an issue
         if (
             user.id !== issue.reporterId &&
             !issue.project.adminIds.includes(user.id)
