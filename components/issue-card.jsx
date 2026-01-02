@@ -47,7 +47,7 @@ export default function IssueCard({
     return (
         <>
             <Card
-                className="cursor-pointer hover:shadow-lg hover:scale-[1.01] transition-all duration-200 ease-in-out bg-gray-700 text-white border border-gray-700 rounded-xl"
+                className="cursor-pointer hover:shadow-lg hover:scale-[1.01] transition-all duration-200 ease-in-out bg-gray-900 text-white border border-gray-700 rounded-xl"
                 onClick={() => setIsDialogOpen(true)}
             >
                 <CardHeader className="rounded-lg">
@@ -59,16 +59,16 @@ export default function IssueCard({
                     <CardTitle className="mt-2">{issue.title}</CardTitle>
                 </CardHeader>
 
-                <CardContent className="flex gap-2 -mt-3">
+                <CardContent className="flex gap-2 mt-3">
                     {showStatus && <Badge>{issue.status}</Badge>}
-                    <Badge variant="secondary" className="-ml-1">
+                    <Badge variant="secondary" className="ml-1">
                         {issue.priority}
                     </Badge>
                 </CardContent>
-                <CardFooter className="flex flex-col items-start space-y-3">
+                <CardFooter className="flex flex-col items-start text-white space-y-3">
                     <UserAvatar user={issue.assignee} />
 
-                    <div className="text-xs text-gray-400 w-full">
+                    <div className="text-xs w-full">
                         Created {created}
                     </div>
                 </CardFooter>

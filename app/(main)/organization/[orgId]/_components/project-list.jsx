@@ -22,22 +22,22 @@ export default async function ProjectList({ orgId }) {
     }
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {projects.map((project) => (
-                <Card key={project.id}>
-                    <CardHeader>
-                        <CardTitle className="flex justify-between items-center">
+                <Card key={project.id} className="hover:shadow-lg bg-[#E0E0E0] transition-all duration-300 border-border/40 overflow-hidden group">
+                    <CardHeader className="flex flex-row justify-between items-start space-y-0 pb-2">
+                        <CardTitle className="text-xl font-bold tracking-tight">
                             {project.name}
-                            <DeleteProject projectId={project.id} />
                         </CardTitle>
+                        <DeleteProject projectId={project.id} />
                     </CardHeader>
-                    <CardContent>
-                        <p className="text-sm text-gray-500 mb-4">
-                            {project.description}
+                    <CardContent className="pb-2">
+                        <p className="text-sm text-muted-foreground mb-6 line-clamp-2 min-h-[2.5rem]">
+                            {project.description || "No description provided."}
                         </p>
                         <Link
                             href={`/project/${project.id}`}
-                            className="text-blue-500 hover:underline"
+                            className="inline-flex items-center text-sm font-semibold text-primary group-hover:translate-x-1 transition-transform"
                         >
                             View Project
                         </Link>

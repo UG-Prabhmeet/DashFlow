@@ -9,11 +9,14 @@ export default function SprintSummary({ sprints }) {
         filter === "ALL" ? sprints : sprints.filter((s) => s.status === filter);
 
     return (
-        <div className="p-6 bg-zinc-900 text-white border border-zinc-700 rounded-2xl shadow-lg">
-            <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold mb-4 border-b border-zinc-700 pb-2">
-                    Sprint Summary
-                </h2>
+        <div className="p-6 bg-zinc-900/50 backdrop-blur-md text-white border border-zinc-800 rounded-3xl shadow-xl flex flex-col">
+            <div className="flex justify-between items-center mb-6">
+                <div className="flex items-center gap-3">
+                    <Flag className="w-6 h-6 text-purple-400" />
+                    <h2 className="text-2xl font-bold tracking-tight">
+                        Sprint Summary
+                    </h2>
+                </div>
                 <select
                     value={filter}
                     onChange={(e) => setFilter(e.target.value)}

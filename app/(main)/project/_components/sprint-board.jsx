@@ -163,7 +163,6 @@ export default function SprintBoard({ sprints, projectId, orgId }) {
                 projectId={projectId}
             />
 
-            // board filters
             {issues && !issuesLoading && (
                 <BoardFilters
                     issues={issues}
@@ -175,18 +174,13 @@ export default function SprintBoard({ sprints, projectId, orgId }) {
                 <p className="text-red-500 mt-2">{updateIssuesError.message}</p>
             )}
 
-            // loading state
             {(updateIssuesLoading || issuesLoading) && (
                 <BarLoader className="mt-4" width={"100%"} color="#36d7b7" />
             )}
 
-            // kanban board
-            // drag and drop context calls onDragEnd when a drag ends
             <DragDropContext onDragEnd={onDragEnd}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 p-4 bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-xl">
                     {statuses.map((column) => (
-
-                        // droppable columns -> droppable id = column status
                         <Droppable key={column.key} droppableId={column.key}>
                             {(provided) => (
                                 <div
@@ -203,8 +197,6 @@ export default function SprintBoard({ sprints, projectId, orgId }) {
                                                 issue.status === column.key
                                         )
                                         .map((issue, index) => (
-
-                                            // draggable issue card -> draggable id = issue id
                                             <Draggable
                                                 key={issue.id}
                                                 draggableId={issue.id}

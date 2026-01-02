@@ -36,9 +36,9 @@ async function Header() {
                         <SignInButton forceRedirectUrl="/onboarding">
                             <Button
                                 variant="outline"
-                                className="bg-black/40 border border-[#00FFA3] text-[#00FFA3] hover:bg-[#00FFA3]/10 hover:text-[#00FFA3] px-5 py-2 rounded-full transition-colors"
+                                className="bg-black/40 text-[#E0E0E0] hover:bg-[#E0E0E0]/10 hover:text-[#E0E0E0] px-5 py-2 rounded-full transition-colors"
                             >
-                                Sign In
+                                Login
                             </Button>
                         </SignInButton>
                     </SignedOut>
@@ -47,7 +47,7 @@ async function Header() {
                     </SignedIn>
 
                     <Link href="/project/create">
-                        <Button className="bg-[#00FFA3] text-black font-semibold px-5 py-2 rounded-full hover:bg-[#00e693]">
+                        <Button className="bg-[#E0E0E0] text-black font-semibold px-5 py-2 rounded-full hover:bg-[#00e693]">
                             <span className="hidden md:inline">
                                 Create Project
                             </span>

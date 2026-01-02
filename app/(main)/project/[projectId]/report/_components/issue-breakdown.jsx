@@ -26,10 +26,13 @@ export default function IssueBreakdown({ issues }) {
     }
 
     return (
-        <div className="p-6 bg-zinc-900 text-white border border-zinc-700 rounded-2xl shadow-lg">
-            <h2 className="text-2xl font-bold mb-4 border-b border-zinc-700 pb-2">
-                Issue Breakdown
-            </h2>{" "}
+        <div className="p-6 bg-zinc-900/50 backdrop-blur-md text-white border border-zinc-800 rounded-3xl shadow-xl flex flex-col">
+            <div className="flex items-center gap-3 mb-6">
+                <PieChart className="w-6 h-6 text-green-400" />
+                <h2 className="text-2xl font-bold tracking-tight">
+                    Issue Distribution
+                </h2>
+            </div>
             <div className="grid md:grid-cols-2 gap-6">
                 <BreakdownSection
                     title={

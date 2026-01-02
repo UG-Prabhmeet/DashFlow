@@ -53,19 +53,6 @@ export function AppSidebar() {
 
     return (
         <Sidebar>
-            <div className="px-1 py-2 flex justify-center border-b">
-                <Link href="/">
-                    <NextImage
-                        src="/DashFlow_logo.png"
-                        alt="DashFlow Logo"
-                        width={140}
-                        height={50}
-                        className="object-contain cursor-pointer"
-                        priority
-                    />
-                </Link>
-            </div>
-
             <SidebarContent>
                 <SidebarGroup>
                     <SidebarGroupLabel>Project</SidebarGroupLabel>
