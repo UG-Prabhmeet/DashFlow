@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+// zod validation schemas
 export const projectSchema = z.object({
     name: z
         .string()

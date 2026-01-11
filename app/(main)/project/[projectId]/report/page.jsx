@@ -7,6 +7,7 @@ import ProjectProgress from "./_components/project-progress";
 import SprintSummary from "./_components/sprint-summary";
 import ProjectTimeline from "./_components/ProjectTimeline";
 import { VelocityChart } from "./_components/VelocityChart";
+import ReportSummary from "./_components/report-summary";
 
 export default async function ProjectReportPage({ params }) {
     const { projectId } = await params;
@@ -27,6 +28,8 @@ export default async function ProjectReportPage({ params }) {
                     projectName={project.name}
                 />
             </div>
+
+            <ReportSummary issues={project.issues} sprints={project.sprints} />
 
             <ProjectTimeline
                 start={new Date(project.projectStartDate)}

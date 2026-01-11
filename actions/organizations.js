@@ -3,6 +3,7 @@
 import { db } from "@/lib/prisma";
 import { auth, clerkClient } from "@clerk/nextjs/server";
 
+// get db organization by [slug / organization name]
 export async function getOrganization(slug) {
     const { userId } = await auth();
     if (!userId) {
@@ -42,6 +43,7 @@ export async function getOrganization(slug) {
     return organization;
 }
 
+// get db projects by organization id
 export async function getProjects(orgId) {
     const { userId } = await auth();
     if (!userId) {
@@ -64,6 +66,7 @@ export async function getProjects(orgId) {
     return projects;
 }
 
+// get user issues by user id and organization id
 export async function getUserIssues(userId) {
     const { orgId } = await auth();
 
@@ -97,6 +100,7 @@ export async function getUserIssues(userId) {
     return issues;
 }
 
+// get all org users by organization id
 export async function getOrganizationUsers(orgId) {
     const { userId } = await auth();
     if (!userId) {

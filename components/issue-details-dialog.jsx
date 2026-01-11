@@ -189,6 +189,7 @@ export default function IssueDetailsDialog({
 
                     <div>
                         <h4 className="font-semibold">Description</h4>
+                        {/* Markdown: Render the description with support for GH flavored markdown */}
                         <MDEditor.Markdown
                             className="rounded px-2 py-1 mt-3"
                             source={

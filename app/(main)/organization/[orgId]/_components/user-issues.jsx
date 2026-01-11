@@ -18,8 +18,8 @@ export default async function UserIssues({ userId }) {
     );
 
     return (
-        <>
-            <h1 className="text-4xl font-bold gradient-title mb-4">
+        <div className="space-y-6">
+            <h1 className="text-4xl font-bold gradient-title">
                 My Issues
             </h1>
 
@@ -39,7 +39,7 @@ export default async function UserIssues({ userId }) {
                     </Suspense>
                 </TabsContent>
             </Tabs>
-        </>
+        </div>
     );
 }
 

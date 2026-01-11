@@ -17,27 +17,42 @@ const Hero = () => (
     <>
         {/* HERO SECTION */}
         <section
-            className="relative min-h-screen bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center text-white text-center px-4"
+            className="relative min-h-screen bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center text-white text-center px-4 hero-mesh"
             style={{ backgroundImage: "url('/hero_background.jpg')" }}
         >
-            <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent z-0" />
+            {/* Ambient Background Glows */}
+            <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-600/10 rounded-full blur-[100px] animate-pulse" />
+            <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-orange-600/10 rounded-full blur-[100px] animate-pulse delay-700" />
+            
+            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-black/80 z-0" />
 
-            <div className="relative z-10 mx-auto">
-                <div className="mb-4">
-                    <span className="inline-block bg-zinc-900 text-xs px-4 py-1 rounded-full border border-zinc-700 tracking-widest mb-6">
-                        BUILT FOR TEAMS
+            <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
+                <div className="mb-6 animate-reveal" style={{ animationDelay: "0.1s" }}>
+                    <span className="inline-flex items-center gap-2 bg-zinc-900/80 backdrop-blur-md text-zinc-300 text-[10px] md:text-xs font-bold px-4 py-1.5 rounded-full border border-white/10 tracking-[0.2em] uppercase">
+                        <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-ping" />
+                        Built for next-gen teams
                     </span>
                 </div>
-                <h2 className="text-5xl md:text-6xl gradient-title mb-2">
-                    Streamline Agile Projects with DashFlow
-                </h2>
-                <p className="text-zinc-400 mt-4 mb-8 text-lg max-w-xl mx-auto">
-                    Real-time collaboration. Visual progress. Powerful reports
+
+                <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-4 text-glow animate-reveal" style={{ animationDelay: "0.2s" }}>
+                    <span className="inline-block gradient-title text-white">Streamline Agile Projects</span>
+                    <br />
+                    <span className="gradient-title text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-orange-300 to-yellow-200">
+                        with DashFlow
+                    </span>
+                </h1>
+
+                <p className="text-white mt-2 mb-10 text-lg md:text-xl max-w-2xl mx-auto">
+                    Real-time collaboration. Visual progress. Powerful reports.
+                    <br />
+                    Experience high-performance project management.
                 </p>
-                <div className="flex justify-center gap-4 mb-16">
+
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-reveal" style={{ animationDelay: "0.4s" }}>
                     <SignInButton forceRedirectUrl="/onboarding">
-                        <button className="bg-black text-white font-medium px-6 py-2 rounded-full shadow hover:bg-zinc-100 transition">
+                        <button className="glow-button group relative bg-white text-black font-bold px-8 py-3 rounded-full flex items-center gap-2 transition-all hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(255,255,255,0.1)]">
                             Get Started
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </button>
                     </SignInButton>
                     <Link
@@ -45,50 +60,55 @@ const Hero = () => (
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        <button className="bg-white text-black font-medium px-6 py-2 rounded-full shadow hover:bg-zinc-100 transition">
+                        <button className="group bg-zinc-900/50 backdrop-blur-xl text-white font-bold px-8 py-3 rounded-full border border-white/10 flex items-center gap-2 transition-all hover:bg-zinc-800 hover:border-white/20">
+                            <FaGithub className="w-5 h-5" />
                             View on GitHub
                         </button>
                     </Link>
                 </div>
             </div>
-        </section>
-        <section className="w-full flex flex-col md:flex-row items-stretch justify-center py-24 px-4 pl-3 md:pl-30 bg-[#0b0b0e]">
-            {/* Left: Main Text */}
-            <div className="flex-1 flex flex-col justify-center max-w-xl mx-auto md:mx-0 pl-12">
-                <h2 className="text-3xl md:text-5xl gradient-title text-white mb-6 leading-tight">
-                    We streamline
-                    <br />
-                    your workflow.
-                    <br />
-                    So your team can
-                    <br />
-                    focus on building.
-                </h2>
-                <p className="text-zinc-400 text-lg mb-8">
-                    DashFlow makes project planning, task tracking, and team
-                    collaboration seamless—out of the box.
-                </p>
-                <button className="flex items-center gap-2 text-blue-400 font-semibold hover:underline text-lg w-fit">
-                    Explore DashFlow <ArrowRight className="w-5 h-5" />
-                </button>
+            
+            {/* Subtle Scroll Indicator */}
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-20">
+                <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center p-1">
+                    <div className="w-1.5 h-1.5 bg-white rounded-full" />
+                </div>
             </div>
+        </section>
+        <section className="w-full relative py-32 px-4 bg-[#050505] overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            
+            <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-20">
+                {/* Left: Main Text */}
+                <div className="flex-1 flex flex-col justify-center animate-reveal">
+                    <h2 className="text-4xl md:text-6xl font-black text-white mb-8 leading-[1.1] tracking-tighter">
+                        We streamline
+                        <br />
+                        <span className="text-blue-500">your workflow.</span>
+                        <br />
+                        So your team can
+                        <br />
+                        <span className="text-purple-500">focus on building.</span>
+                    </h2>
+                    <p className="text-zinc-400 text-xl mb-10 leading-relaxed">
+                        DashFlow makes project planning, task tracking, and team
+                        collaboration seamless—out of the box. No more friction, 
+                        just pure productivity.
+                    </p>
+                </div>
 
-            <div className="flex-1 hidden md:flex flex-col justify-center pl-16">
-                <ul className="space-y-2 text-2xl font-medium select-none">
-                    <li className="text-zinc-100">Sprint planning</li>
-                    <li className="text-zinc-100">Real-time sync</li>
-                    <li className="text-zinc-100">Custom workflows</li>
-                    <li className="text-zinc-300">Drag & drop tasks</li>
-                    <li className="text-zinc-300">Role-based access</li>
-                    <li className="text-zinc-300">Task dependencies</li>
-                    <li className="text-zinc-400">Timeline view</li>
-                    <li className="text-zinc-400">Issue tracking</li>
-                    <li className="text-zinc-400">Team chat</li>
-                    <li className="text-zinc-400">Comments & mentions</li>
-                    <li className="text-zinc-400">Notifications</li>
-                    <li className="text-zinc-400">Kanban & Gantt</li>
-                    <li className="text-zinc-100">Analytics & reporting</li>
-                </ul>
+                <div className="flex-1 grid grid-cols-2 gap-4 animate-reveal" style={{ animationDelay: "0.2s" }}>
+                    {[
+                        "Sprint planning", "Real-time sync", "Custom workflows", 
+                        "Drag & drop tasks", "Role-based access", "Task dependencies",
+                        "Timeline view", "Issue tracking", "Team chat", 
+                        "Analytics & reporting"
+                    ].map((item, i) => (
+                        <div key={i} className="bg-zinc-900/40 backdrop-blur-sm border border-white/5 p-6 rounded-3xl hover:border-white/10 transition-all hover:-translate-y-1">
+                            <p className="text-zinc-100 font-semibold tracking-tight">{item}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
         </section>
         <section className="bg-black text-white py-24 px-4">
@@ -269,26 +289,28 @@ const Hero = () => (
                 </div>
             </div>
         </section>
-        <section className="bg-gradient-to-b from-black via-zinc-900/80 to-black py-24 px-4">
-            <div className="max-w-2xl mx-auto text-center mb-12">
-                <h2 className="text-4xl md:text-5xl gradient-title mb-4 text-zinc-100">
-                    Frequently asked
-                    <br />
-                    questions
-                </h2>
-            </div>
-            <div className="max-w-2xl mx-auto">
+        <section className="bg-[#050505] py-32 px-4 relative overflow-hidden">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[300px] bg-blue-600/10 blur-[120px] rounded-full -translate-y-1/2" />
+            
+            <div className="max-w-4xl mx-auto relative z-10">
+                <div className="text-center mb-20">
+                    <h2 className="text-4xl md:text-6xl font-black mb-6 tracking-tighter text-white">
+                        Common questions
+                    </h2>
+                    <p className="text-zinc-500 text-lg">Everything you need to know about DashFlow.</p>
+                </div>
+                
                 <Accordion
                     type="single"
                     collapsible
-                    className="w-full space-y-2"
+                    className="w-full space-y-4"
                 >
                     {faqData.map((item, index) => (
-                        <AccordionItem key={index} value={`item-${index}`}>
-                            <AccordionTrigger className="text-left text-base text-zinc-100">
+                        <AccordionItem key={index} value={`item-${index}`} className="border border-white/5 bg-zinc-900/30 rounded-3xl px-6 py-2 transition-all hover:bg-zinc-900/50 hover:border-white/10">
+                            <AccordionTrigger className="text-left text-lg font-bold text-white hover:no-underline">
                                 {item.question}
                             </AccordionTrigger>
-                            <AccordionContent className="text-zinc-400">
+                            <AccordionContent className="text-zinc-400 text-base leading-relaxed pt-2">
                                 {item.answer}
                             </AccordionContent>
                         </AccordionItem>
@@ -296,27 +318,20 @@ const Hero = () => (
                 </Accordion>
             </div>
         </section>
-        <section className="min-h-screen flex flex-col items-center justify-center bg-black text-white text-center px-4 relative overflow-hidden">
-            <div
-                className="absolute inset-0 z-0"
-                style={{
-                    backgroundImage:
-                        "radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(135deg, rgba(255,140,0,0.08) 0%, transparent 70%)",
-                    backgroundSize: "32px 32px",
-                    pointerEvents: "none",
-                }}
-            />
-            <h1 className="text-4xl md:text-6xl gradient-title mb-4 text-zinc-100 z-10">
-                Run Sprints. Track Issues. Deliver Faster.
-            </h1>
-            <p className="text-zinc-400 text-lg mb-8 z-10">
-                DashFlow helps teams plan, build, and ship better – with
-                real-time sync, kanban boards, and powerful reporting.
-            </p>
-            <div className="z-10">
-                <button className="bg-white text-black font-medium px-6 py-2 rounded-full shadow hover:bg-zinc-100 transition">
-                    Explore DashFlow
-                </button>
+
+        <section className="relative py-40 px-4 flex flex-col items-center justify-center text-center overflow-hidden">
+            <div className="absolute inset-0 bg-blue-600/5 backdrop-blur-[200px]" />
+            <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-gradient-to-b from-blue-600/20 to-transparent rounded-full blur-[120px]" />
+            
+            <div className="relative z-10 max-w-4xl mx-auto">
+                <h2 className="text-5xl md:text-8xl font-black tracking-center tracking-tighter mb-8 text-white">
+                    Ready to build <br /><span className="text-blue-500 italic">the future?</span>
+                </h2>
+                <SignInButton forceRedirectUrl="/onboarding">
+                    <button className="glow-button bg-white text-black font-black px-12 py-5 rounded-2xl text-xl shadow-[0_20px_40px_rgba(255,255,255,0.1)] transition-transform hover:scale-105 active:scale-95">
+                        Get Started for Free
+                    </button>
+                </SignInButton>
             </div>
         </section>
         <footer className="w-full border-t border-zinc-800 bg-[#0b0b0e] py-8 px-4">
@@ -358,7 +373,7 @@ const Hero = () => (
                     </div>
                 </div>
                 <div className="text-zinc-400 text-sm text-center md:text-right mt-6 md:mt-0">
-                    © 2025 DashFlow — All rights reserved.
+                    © {new Date().getFullYear()} DashFlow — All rights reserved.
                 </div>
             </div>
         </footer>

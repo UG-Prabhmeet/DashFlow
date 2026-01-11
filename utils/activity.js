@@ -1,13 +1,7 @@
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 
-/**
- * Logs an activity to the database
- * @param {string} projectId - Project ID
- * @param {string} description - Detailed message for UI
- * @param {string} actionType - Enum-like string e.g., ISSUE_CREATED, STATUS_UPDATED
- * @param {string} [issueId] - Optional Issue ID
- */
+// logs activity to db
 export async function logActivity(
     projectId,
     description,

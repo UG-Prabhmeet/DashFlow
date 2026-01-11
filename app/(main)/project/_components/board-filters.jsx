@@ -20,6 +20,7 @@ export default function BoardFilters({ issues, onFilterChange }) {
     const [selectedAssignees, setSelectedAssignees] = useState([]);
     const [selectedPriority, setSelectedPriority] = useState("");
 
+    // Filters: Derive a unique list of assignees from the current issues
     const assignees = issues
         .map((issue) => issue.assignee)
         .filter(
@@ -30,11 +31,15 @@ export default function BoardFilters({ issues, onFilterChange }) {
     useEffect(() => {
         const filteredIssues = issues.filter(
             (issue) =>
+                // 1. Search term match (case-insensitive)
                 issue.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+                // 2. Assignee match (if any are selected)
                 (selectedAssignees.length === 0 ||
                     selectedAssignees.includes(issue.assignee?.id)) &&
+                // 3. Priority match (if selected)
                 (selectedPriority === "" || issue.priority === selectedPriority)
         );
+        // Communicate the filtered results back to the parent (SprintBoard)
         onFilterChange(filteredIssues);
     }, [searchTerm, selectedAssignees, selectedPriority, issues]);
 
@@ -60,6 +65,7 @@ export default function BoardFilters({ issues, onFilterChange }) {
     return (
         <div className="space-y-4">
             <div className="flex flex-col pr-2 sm:flex-row gap-4 sm:gap-6 mt-6">
+
                 <Input
                     className="w-full text-slate-100 sm:w-72"
                     placeholder="Search issues..."

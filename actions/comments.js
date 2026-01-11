@@ -3,7 +3,7 @@
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 
-// Get all comments for an issue
+// get comments for an issue
 export async function getComments(issueId) {
     const { userId, orgId } = await auth();
 

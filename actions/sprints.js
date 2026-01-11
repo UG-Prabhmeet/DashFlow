@@ -3,6 +3,7 @@
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 
+// create sprint
 export async function createSprint(projectId, data) {
     const { userId, orgId } = await auth();
 
@@ -32,6 +33,7 @@ export async function createSprint(projectId, data) {
     return sprint;
 }
 
+// update sprint status
 export async function updateSprintStatus(sprintId, newStatus) {
     const { userId, orgId, orgRole } = await auth();
 
@@ -62,6 +64,7 @@ export async function updateSprintStatus(sprintId, newStatus) {
         const startDate = new Date(sprint.startDate);
         const endDate = new Date(sprint.endDate);
 
+        // invalid status change
         if (newStatus === "ACTIVE" && (now < startDate || now > endDate)) {
             throw new Error("Cannot start sprint outside of its date range");
         }

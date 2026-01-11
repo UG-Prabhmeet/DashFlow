@@ -4,6 +4,7 @@ import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { clerkClient } from "@clerk/express";
 
+// create project
 export async function createProject(data) {
     const { userId, orgId } = await auth();
 
@@ -15,7 +16,8 @@ export async function createProject(data) {
         throw new Error("No Organization Selected");
     }
 
-    // Check if the user is an admin of the organization
+    // RBAC: Check if the user has appropriate permissions in the organization
+    // Projects can only be created by organization admins
     const { data: membershipList } =
         await clerkClient.organizations.getOrganizationMembershipList({
             organizationId: orgId,
@@ -30,6 +32,7 @@ export async function createProject(data) {
     }
 
     try {
+        // create new project if admin 
         const project = await db.project.create({
             data: {
                 name: data.name,
@@ -45,6 +48,7 @@ export async function createProject(data) {
     }
 }
 
+// get db project by project id
 export async function getProject(projectId) {
     const { userId, orgId } = await auth();
 
@@ -60,7 +64,7 @@ export async function getProject(projectId) {
         throw new Error("User not found");
     }
 
-    // Get project with sprints and organization
+    // Get project with sprints and issues in latest order
     const project = await db.project.findUnique({
         where: { id: projectId },
         include: {
@@ -80,7 +84,7 @@ export async function getProject(projectId) {
         throw new Error("Project not found");
     }
 
-    // Verify project belongs to the organization
+    // check project belongs to organization
     if (project.organizationId !== orgId) {
         return null;
     }
@@ -88,6 +92,7 @@ export async function getProject(projectId) {
     return project;
 }
 
+// delete project
 export async function deleteProject(projectId) {
     const { userId, orgId, orgRole } = await auth();
 
@@ -95,6 +100,7 @@ export async function deleteProject(projectId) {
         throw new Error("Unauthorized");
     }
 
+    // RBAC: Ensure ONLY organization admins can delete projects
     if (orgRole !== "org:admin") {
         throw new Error("Only organization admins can delete projects");
     }

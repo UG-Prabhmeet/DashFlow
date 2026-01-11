@@ -18,6 +18,7 @@ export default function CreateProjectPage() {
     const router = useRouter();
     const { isLoaded: isOrgLoaded, membership } = useOrganization();
     const { isLoaded: isUserLoaded } = useUser();
+    // to track if user is an admin of the selected organization
     const [isAdmin, setIsAdmin] = useState(false);
 
     const {
@@ -29,6 +30,7 @@ export default function CreateProjectPage() {
     });
 
     useEffect(() => {
+        // Update admin status when organization or membership data changes
         if (isOrgLoaded && isUserLoaded && membership) {
             setIsAdmin(membership.role === "org:admin");
         }
@@ -58,6 +60,7 @@ export default function CreateProjectPage() {
         return null;
     }
 
+    // RBAC: If user is not an admin, prevent them from seeing the form
     if (!isAdmin) {
         return (
             <div className="flex flex-col gap-2 items-center">

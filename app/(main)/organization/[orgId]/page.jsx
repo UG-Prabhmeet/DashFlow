@@ -21,16 +21,16 @@ export default async function OrganizationPage({ params }) {
     }
 
     return (
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto">
             <div className="mb-4 flex flex-col sm:flex-row justify-between items-start">
-                <h1 className="text-4xl font-bold gradient-title pb-2">
+                <h1 className="text-5xl font-bold gradient-title pb-2">
                     {organization.name}&rsquo;s Projects
                 </h1>
                 <OrgSwitcher />
             </div>
-            <div className="mb-4">
+            <section className="mb-8">
                 <ProjectList orgId={organization.id} />
-            </div>
+            </section>
             <div className="mt-8">
                 <UserIssues userId={userId} />
             </div>
